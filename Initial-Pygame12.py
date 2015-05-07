@@ -20,7 +20,9 @@ white = (255,255,255) #Todas opções de cores
 red = (255,0,0) #Somente vermelha
 green = (0,255,0)
 blue = (0,0,255)
+block_color = (100, 230, 50)
 car_width = 110
+dodged = 0
 #De acordo com isso podemos ir misturando as cores no display
 
 gameDisplay = pygame.display.set_mode((display_width,display_height)) #Cria o display e o seu respectivo tamanho
@@ -28,6 +30,11 @@ pygame.display.set_caption('Race Game') #Título da janela
 clock = pygame.time.Clock()
 
 carImg = pygame.image.load('ferrari-python.jpg') #Comando para carregar imagens
+
+def things_dodged(count): #Função que define o score do player
+    font = pygame.font.SysFont(None, 25)
+    text = font.render('Dodged: '+str(count), True, red)
+    gameDisplay.blit(text,(0,0)) #Sempre p/ colocar algo na tela necessita se usar o comando blit
 
 def things(thingx, thingy, thingw, thingh, color): #Define as especificações dos "obstáculos" na pista
     pygame.draw.rect(gameDisplay, color, [thingx,thingy,thingw,thingh]) #Desenha nosso obstáculo retangulo com as respectivas características
@@ -52,7 +59,7 @@ def message_display(text): #Função que define a mensagem no display
     game_loop() #Recomeça todo o jogo após a mensagem no display
 
 def crash(): #Função que roda caso o carro bater
-    message_display('You Crashed')
+    message_display('ERROOU!!')
 
 def game_loop():
     
@@ -89,17 +96,31 @@ def game_loop():
           gameDisplay.fill(black) #Define a cor de fundo do display. NECESSITA ESTAR ANTES DE CHAMAR A FUNÇÃO CARRO!
           
           #things(thingx, thingy, thingw, thingh, color)
-          things(thing_startx, thing_starty, thing_width, thing_height, white) #Chamando a função dos obstáculos de acordo com as variáveis
+          things(thing_startx, thing_starty, thing_width, thing_height, block_color) #Chamando a função dos obstáculos de acordo com as variáveis
           thing_starty += thing_speed #Movimentando o objeto no eixo y de acordo com a velocidade pré-estabelecida
-          car(x,y) #Chamando a função car para nos mostrar o carro na posição (x,y) 
+          car(x,y) #Chamando a função car para nos mostrar o carro na posição (x,y)
+          things_dodged(dodged) #Chamando a função do score
           
           if x > (display_width - car_width) or x < 0: #Caso o carro bata nas fronteiras da tela o jogo acaba
-              crash()
+              crash() #Chamando a função colisão
               
           if thing_starty > display_height: #Estas duas linhas definem que o bloco volte a aparecer como obstáculo
               thing_starty = 0 - thing_height #Bloco volta mais rápido
               thing_startx = random.randrange(0,display_width) #Volta em outra posição de acordo com a função random
+                 
+              global dodged   
+              dodged += 1 #Aumenta um no score do player caso ele não colida com o bloco
               
+              for i in range(1,100): #Sobe a dificuldade do game a cada 10 ups no score          
+                  if dodged == 10*i:
+                      thing_speed += 1*i
+            
+          if y < thing_starty+thing_height: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas 
+
+              
+              if x > thing_startx and x < thing_startx + thing_width or x+car_width > thing_startx and x + car_width < thing_startx+thing_width:
+
+               crash()
           
           #print(event) #Nos mostra os eventos que estão acontecendo
           pygame.display.update() #Update em toda a janela ... ou #pygame.display.flip()
