@@ -13,10 +13,21 @@ pygame.display.set_caption('Davitors') #Nome do jogo a ser decidido
 framespersecond = pygame.time.Clock()
 
 black = (0,0,0)
-largura_da_tela = 960 #eixox
-altura_da_tela = 720 #eixoy
+largura_da_tela = 800 #eixox
+altura_da_tela = 600
+velocidade_fundo = 5
+posição_inicial_fundo = -600
 
 DisplayDoJogo = pygame.display.set_mode((largura_da_tela,altura_da_tela))
+    
+def função_fundo():
+    Imagem_Fundo = pygame.image.load('8bitsroad.png')
+    Imagem_Fundo = pygame.transform.scale(Imagem_Fundo,(largura_da_tela,altura_da_tela))
+    DisplayDoJogo.blit(Imagem_Fundo,(0,0))
+    
+    
+
+função_fundo()
 
 Não_Rodar_Jogo = False
 
@@ -29,6 +40,7 @@ while not Não_Rodar_Jogo:
 
     pygame.display.update()
     framespersecond.tick(60)
+
 
 pygame.quit()
 quit()
