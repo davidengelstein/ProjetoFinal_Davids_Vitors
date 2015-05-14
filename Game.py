@@ -6,6 +6,7 @@ Created on Mon May 11 20:01:53 2015
 """
 
 import pygame
+import random
 
 pygame.init()
 pygame.display.set_caption('Davitors') #Nome do jogo a ser decidido
@@ -18,14 +19,9 @@ altura_da_tela = 600
 
 fps = 60
 
-velocidade_fundo = 5
-posição_inicial_fundo_y = -600
-posição_inicial_fundo_x = 0
-
-car_positiony = 475
-car_positionx = 375 #esquerda = 210 , meio = 375, direita = 540 - Variando de 165
-
 imgcarro = pygame.image.load('car8bits2.png')
+lourenco = pygame.image.load('lor.png')
+miranda = pygame.image.load('mir.png')
 
 
 def fundo(x,y):
@@ -34,7 +30,13 @@ def fundo(x,y):
     
 def imagem_carro(a,b):
     DisplayDoJogo.blit(imgcarro,(a,b))
+    
 
+def lourenco1(r,s):
+    DisplayDoJogo.blit(lourenco,(r,s))
+
+def miranda1(l,m):
+    DisplayDoJogo.blit(miranda,(l,m))
     
 
 DisplayDoJogo = pygame.display.set_mode((largura_da_tela,altura_da_tela))
@@ -48,44 +50,72 @@ Não_Rodar_Jogo = False
 
 
 
+def loop_jogo():
+    velocidade_fundo = 5
+    posição_inicial_fundo_y = -600
+    posição_inicial_fundo_x = 0
+    
+    posição_lourencoX = random.choice([210,375,540])
+    posição_lourencoY = -600
+    velocidade_lourenco = 5
+    
+    posição_mirandaX = 210
+    posição_mirandaY = 350
+    
+    car_positiony = 475
+    car_positionx = 375 #esquerda = 210 , meio = 375, direita = 540 - Variando de 165
+    
+    Não_Rodar_Jogo = False
 
-while not Não_Rodar_Jogo:
-
-    for tecla in pygame.event.get():
-        
-        if tecla.type == pygame.QUIT:
-            Não_Rodar_Jogo = True
-        
-        if tecla.type == pygame.KEYDOWN:
+    while not Não_Rodar_Jogo:
+    
+        for tecla in pygame.event.get():
             
-            if tecla.type == pygame.K_LEFT:
-                car_positionx = 200  
- 
-            elif tecla.type == pygame.K_RIGHT:
-                car_positionx = 540
-        
-        if tecla.type == pygame.KEYUP:
+            if tecla.type == pygame.QUIT:
+                Não_Rodar_Jogo = True
             
-            if tecla.type == pygame.K_LEFT or pygame.K_RIGHT:
-                car_positionx = 375
-    
-    
-    print(tecla)
-    fundo(posição_inicial_fundo_x,posição_inicial_fundo_y)    
-    posição_inicial_fundo_y += velocidade_fundo    
-    
-    
-    
-    if posição_inicial_fundo_y == 0:
-        posição_inicial_fundo_y = -600
+            if tecla.type == pygame.KEYDOWN:
+                
+                if car_positionx == 375 and tecla.key == pygame.K_LEFT:
+                    car_positionx = 210
+                    
+                elif car_positionx == 210 and tecla.key == pygame.K_RIGHT:
+                    car_positionx = 375
+                    
+                elif car_positionx == 375 and tecla.key == pygame.K_RIGHT:
+                    car_positionx = 540
+                    
+                elif car_positionx == 540 and tecla.key == pygame.K_LEFT:
+                    car_positionx = 375
+                    
+    #        if tecla.type == pygame.KEYUP:
+    #            
+    #            if tecla.key == pygame.K_LEFT or tecla.key == pygame.K_RIGHT:
+    #                car_positionx = 375
         
-    
-    imagem_carro(car_positionx,car_positiony)
-    
-    
-    pygame.display.update()
-    framespersecond.tick(fps)
+        
+        
+        fundo(posição_inicial_fundo_x,posição_inicial_fundo_y)    
+        posição_inicial_fundo_y += velocidade_fundo    
+        
+        
+        
+        if posição_inicial_fundo_y == 0:
+            posição_inicial_fundo_y = -600
+        
+        if posição_lourencoY > altura_da_tela:
+            posição_lourencoY = 0 - altura_da_tela
+            posição_lourencoX = random.choice([210,375,540])
+            
+        
+        imagem_carro(car_positionx,car_positiony)
+        lourenco1(posição_lourencoX,posição_lourencoY)
+        posição_lourencoY += velocidade_lourenco
+        miranda1(posição_mirandaX,posição_mirandaY)
+        
+        pygame.display.update()
+        framespersecond.tick(fps)
 
-
+loop_jogo()
 pygame.quit()
 quit()
