@@ -22,6 +22,7 @@ fps = 60
 imgcarro = pygame.image.load('car8bits2.png')
 lourenco = pygame.image.load('lor.png')
 miranda = pygame.image.load('mir.png')
+orfali = pygame.image.load('orf.png')
 
 
 def fundo(x,y):
@@ -35,9 +36,6 @@ def imagem_carro(a,b):
 def lourenco1(r,s):
     DisplayDoJogo.blit(lourenco,(r,s))
 
-def miranda1(l,m):
-    DisplayDoJogo.blit(miranda,(l,m))
-    
 
 DisplayDoJogo = pygame.display.set_mode((largura_da_tela,altura_da_tela))
     
@@ -56,12 +54,9 @@ def loop_jogo():
     posição_inicial_fundo_x = 0
     
     posição_lourencoX = random.choice([210,375,540])
-    posição_lourencoY = -600
-    velocidade_lourenco = 5
-    
-    posição_mirandaX = 210
-    posição_mirandaY = 350
-    
+    posição_lourencoY = random.randrange(-600,-100)
+    velocidade_lourenco = velocidade_fundo
+        
     car_positiony = 475
     car_positionx = 375 #esquerda = 210 , meio = 375, direita = 540 - Variando de 165
     
@@ -104,14 +99,11 @@ def loop_jogo():
             posição_inicial_fundo_y = -600
         
         if posição_lourencoY > altura_da_tela:
-            posição_lourencoY = 0 - altura_da_tela
+            posição_lourencoY = 0 - random.randrange(300,900)
             posição_lourencoX = random.choice([210,375,540])
-            
-        
+          
         imagem_carro(car_positionx,car_positiony)
         lourenco1(posição_lourencoX,posição_lourencoY)
-        posição_lourencoY += velocidade_lourenco
-        miranda1(posição_mirandaX,posição_mirandaY)
         
         pygame.display.update()
         framespersecond.tick(fps)
