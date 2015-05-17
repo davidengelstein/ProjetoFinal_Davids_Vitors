@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Created on Mon May 11 20:01:53 2015
-@author: vitor_000
+@author: vitor_000,vitor_kitahara
 """
 
 import pygame
@@ -34,12 +34,12 @@ heloisa = pygame.image.load('helo2.png')
 vinicius = pygame.image.load('vinicius1.png')
 musica = pygame.mixer.music.load('uptown8bits.wav')
 faustao = pygame.mixer.Sound('Faustao.wav')
-backG = pygame.image.load('8bitsRoad.png')
+Imagem_Fundo = pygame.image.load('8bitsRoad.png')
 Imagem_Fundo = pygame.transform.scale(Imagem_Fundo,(largura_da_tela,1200))
 
 def desvio(contar):
     font = pygame.font.SysFont(None, 40)
-    text = font.render("Score: " + str(count),True,green)
+    text = font.render("Score: " + str(contar),True,green)
     DisplayDoJogo.blit(text,(0,0))
 
 def mensagem(text):
@@ -94,7 +94,7 @@ Não_Rodar_Jogo = False
 def loop_jogo():
     pygame.mixer.music.play()
     
-    velocidade_fundo = 10
+    velocidade_fundo = 5
     posição_inicial_fundo_y = -600
     posição_inicial_fundo_x = 0
     
@@ -130,7 +130,7 @@ def loop_jogo():
     car_positionX = 375 #esquerda = 210 , meio = 375, direita = 540 - Variando de 165
     carX = 57
     carY = 106
-    
+    Score = 0
     
     Não_Rodar_Jogo = False
 
@@ -205,7 +205,7 @@ def loop_jogo():
             posição_heloisaX = random.choice([210,375,540])
             Score += 1
             
-        imagem_carro(car_positionx,car_positiony)
+        imagem_carro(car_positionX,car_positionY)
         
         lourenco1(posição_lourencoX,posição_lourencoY)
         miranda1(posição_mirandaX,posição_mirandaY)
@@ -231,3 +231,4 @@ def loop_jogo():
 loop_jogo()
 pygame.quit()
 quit()
+
