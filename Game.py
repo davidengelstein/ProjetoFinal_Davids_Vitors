@@ -9,7 +9,7 @@ import random
 import time
 
 pygame.init()
-pygame.display.set_caption('Davitors') #Nome do jogo a ser decidido
+pygame.display.set_caption('Teachers Game Race') #Nome do jogo a ser decidido
 
 framespersecond = pygame.time.Clock()
 
@@ -34,8 +34,10 @@ fred = pygame.image.load('fred1.png')
 haddad = pygame.image.load('had1.png')
 heloisa = pygame.image.load('helo2.png')
 vinicius = pygame.image.load('vinicius1.png')
+
 #musica = pygame.mixer.music.load('uptown8bits.wav')
 #faustao = pygame.mixer.Sound('Faustao.mp3')
+
 Imagem_Fundo = pygame.image.load('fundo.png')
 Imagem_Fundo = pygame.transform.scale(Imagem_Fundo,(largura_da_tela,1200))
 
@@ -101,7 +103,7 @@ Não_Rodar_Jogo = False
 def loop_jogo():
     #pygame.mixer.music.play()
     
-    velocidade_fundo = 5
+    velocidade_fundo = 10
     posição_inicial_fundo_y = -600
     posição_inicial_fundo_x = 0
     
@@ -134,7 +136,7 @@ def loop_jogo():
     velocidade_heloisa = velocidade_fundo
     
     prof_largura = 60
-    prof_altura = 83
+    prof_altura = 60
     
     car_positionY = 475
     car_positionX = 375 #esquerda = 210 , meio = 375, direita = 540 - Variando de 165
@@ -234,31 +236,31 @@ def loop_jogo():
         posição_heloisaY += velocidade_heloisa
         
         
-        if car_positionY < posição_lourencoY + prof_altura: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
+        if car_positionY < posição_lourencoY + prof_altura and car_positionY + carY >= posição_lourencoY + 60: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
               if car_positionX > posição_lourencoX and car_positionX < posição_lourencoX + prof_largura or car_positionX+carX > posição_lourencoX and car_positionX + carX < posição_lourencoX+prof_largura:
                   bater()
         
-        if car_positionY < posição_mirandaY + prof_altura: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
+        if car_positionY  < posição_mirandaY + prof_altura and car_positionY + carY >= posição_mirandaY + 60: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
               if car_positionX > posição_mirandaX and car_positionX < posição_mirandaX + prof_largura or car_positionX+carX > posição_mirandaX and car_positionX + carX < posição_mirandaX+prof_largura:
                   bater()
 
-        if car_positionY < posição_orfaliY + prof_altura: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
+        if car_positionY  < posição_orfaliY + prof_altura and car_positionY + carY >= posição_orfaliY + 60: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
               if car_positionX > posição_orfaliX and car_positionX < posição_orfaliX + prof_largura or car_positionX+carX > posição_orfaliX and car_positionX + carX < posição_orfaliX+prof_largura:
                   bater()
                   
-        if car_positionY < posição_fredY + prof_altura: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
+        if car_positionY  < posição_fredY + prof_altura and car_positionY + carY >= posição_fredY + 60: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
               if car_positionX > posição_fredX and car_positionX < posição_fredX + prof_largura or car_positionX+carX > posição_fredX and car_positionX + carX < posição_fredX+prof_largura:
                   bater()
 
-        if car_positionY < posição_haddadY + prof_altura: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
+        if car_positionY  < posição_haddadY + prof_altura: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
               if car_positionX > posição_haddadX and car_positionX < posição_haddadX + prof_largura or car_positionX+carX > posição_haddadX and car_positionX + carX < posição_haddadX+prof_largura:
-                  bater()
+                  Score += 10
 
         if car_positionY < posição_viniciusY + prof_altura: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
               if car_positionX > posição_viniciusX and car_positionX < posição_viniciusX + prof_largura or car_positionX+carX > posição_viniciusX and car_positionX + carX < posição_viniciusX+prof_largura:
-                  bater()
+                  Score += 5
 
-        if car_positionY < posição_heloisaY + prof_altura: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
+        if car_positionY < posição_heloisaY + prof_altura and car_positionY + carY >= posição_heloisaY + 60: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
               if car_positionX > posição_heloisaX and car_positionX < posição_heloisaX + prof_largura or car_positionX+carX > posição_heloisaX and car_positionX + carX < posição_heloisaX+prof_largura:
                   bater()                  
         
