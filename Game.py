@@ -22,6 +22,8 @@ red = (255,0,0)
 largura_da_tela = 800 #eixox
 altura_da_tela = 600
 
+gameDisplay = pygame.display.set_mode((largura_da_tela,altura_da_tela))
+
 fps = 60
 
 imgcarro = pygame.image.load('car8bits2.png')
@@ -32,29 +34,34 @@ fred = pygame.image.load('fred1.png')
 haddad = pygame.image.load('had1.png')
 heloisa = pygame.image.load('helo2.png')
 vinicius = pygame.image.load('vinicius1.png')
-musica = pygame.mixer.music.load('uptown8bits.wav')
-faustao = pygame.mixer.Sound('Faustao.wav')
-Imagem_Fundo = pygame.image.load('8bitsRoad.png')
+#musica = pygame.mixer.music.load('uptown8bits.wav')
+#faustao = pygame.mixer.Sound('Faustao.mp3')
+Imagem_Fundo = pygame.image.load('fundo.png')
 Imagem_Fundo = pygame.transform.scale(Imagem_Fundo,(largura_da_tela,1200))
 
 def desvio(contar):
     font = pygame.font.SysFont(None, 40)
     text = font.render("Score: " + str(contar),True,green)
     DisplayDoJogo.blit(text,(0,0))
+    
+def text_objects(text, font): #Não entendi muito bem essa função
+    textSurface = font.render(text, True, white)
+    return textSurface, textSurface.get_rect() 
 
 def mensagem(text):
     largeText = pygame.font.Font('freesansbold.ttf',115)
-    TextSurf, TextRect = text_objects(text, largeText, red)
-    TextRect.center = ((screenX/2),(screenY/2))
+    TextSurf, TextRect = text_objects(text, largeText)
+    TextRect.center = ((largura_da_tela/2),(altura_da_tela/2))
     gameDisplay.blit(TextSurf, TextRect)
     pygame.display.update()
     time.sleep(2)
     loop_jogo()
 
 def bater():
-    pygame.mixer.music.stop()
-    pygame.mixer.Sound.play(faustao)
+    #pygame.mixer.music.stop()
+    #pygame.mixer.Sound.play(faustao)
     mensagem('ERROOOOU!!!')
+    Score = 0
 
 def fundo(x,y):
     DisplayDoJogo.blit(Imagem_Fundo,(x,y))
@@ -92,7 +99,7 @@ Não_Rodar_Jogo = False
 
 
 def loop_jogo():
-    pygame.mixer.music.play()
+    #pygame.mixer.music.play()
     
     velocidade_fundo = 5
     posição_inicial_fundo_y = -600
@@ -125,6 +132,9 @@ def loop_jogo():
     posição_heloisaX = random.choice([210,375,540])
     posição_heloisaY = random.randrange(-2500,0)
     velocidade_heloisa = velocidade_fundo
+    
+    prof_largura = 60
+    prof_altura = 83
     
     car_positionY = 475
     car_positionX = 375 #esquerda = 210 , meio = 375, direita = 540 - Variando de 165
@@ -222,7 +232,35 @@ def loop_jogo():
         posição_haddadY += velocidade_haddad   
         posição_viniciusY += velocidade_vinicius
         posição_heloisaY += velocidade_heloisa
+        
+        
+        if car_positionY < posição_lourencoY + prof_altura: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
+              if car_positionX > posição_lourencoX and car_positionX < posição_lourencoX + prof_largura or car_positionX+carX > posição_lourencoX and car_positionX + carX < posição_lourencoX+prof_largura:
+                  bater()
+        
+        if car_positionY < posição_mirandaY + prof_altura: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
+              if car_positionX > posição_mirandaX and car_positionX < posição_mirandaX + prof_largura or car_positionX+carX > posição_mirandaX and car_positionX + carX < posição_mirandaX+prof_largura:
+                  bater()
 
+        if car_positionY < posição_orfaliY + prof_altura: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
+              if car_positionX > posição_orfaliX and car_positionX < posição_orfaliX + prof_largura or car_positionX+carX > posição_orfaliX and car_positionX + carX < posição_orfaliX+prof_largura:
+                  bater()
+                  
+        if car_positionY < posição_fredY + prof_altura: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
+              if car_positionX > posição_fredX and car_positionX < posição_fredX + prof_largura or car_positionX+carX > posição_fredX and car_positionX + carX < posição_fredX+prof_largura:
+                  bater()
+
+        if car_positionY < posição_haddadY + prof_altura: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
+              if car_positionX > posição_haddadX and car_positionX < posição_haddadX + prof_largura or car_positionX+carX > posição_haddadX and car_positionX + carX < posição_haddadX+prof_largura:
+                  bater()
+
+        if car_positionY < posição_viniciusY + prof_altura: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
+              if car_positionX > posição_viniciusX and car_positionX < posição_viniciusX + prof_largura or car_positionX+carX > posição_viniciusX and car_positionX + carX < posição_viniciusX+prof_largura:
+                  bater()
+
+        if car_positionY < posição_heloisaY + prof_altura: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
+              if car_positionX > posição_heloisaX and car_positionX < posição_heloisaX + prof_largura or car_positionX+carX > posição_heloisaX and car_positionX + carX < posição_heloisaX+prof_largura:
+                  bater()                  
         
         
         pygame.display.update()
