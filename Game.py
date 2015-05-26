@@ -18,14 +18,18 @@ white = (255,255,255)
 blue = (0,0,255)
 green = (0,255,0)
 red = (255,0,0)
+<<<<<<< HEAD
 blackb = (200,200,200)
+=======
+yellow = (255,242,0)
+>>>>>>> origin/master
 
 largura_da_tela = 800 #eixox
 altura_da_tela = 600
 
 gameDisplay = pygame.display.set_mode((largura_da_tela,altura_da_tela))
 
-fps = 60
+fps = 1000
 
 imgcarro = pygame.image.load('car8bits2.png')
 lourenco = pygame.image.load('lor.png')
@@ -35,11 +39,26 @@ fred = pygame.image.load('fred1.png')
 haddad = pygame.image.load('had1.png')
 heloisa = pygame.image.load('helo2.png')
 vinicius = pygame.image.load('vinicius1.png')
+<<<<<<< HEAD
 
 
+=======
+moedass = pygame.image.load('moeda.png')
+>>>>>>> origin/master
 musica = pygame.mixer.music.load('uptown8bits.wav')
-#faustao = pygame.mixer.Sound('Faustao.mp3')
+#faustao = pygame.mixer.Sound('faustao.wav')
 
+<<<<<<< HEAD
+=======
+Imagem_Fundo = pygame.image.load('8bitsRoad.png')
+Imagem_Fundo = pygame.transform.scale(Imagem_Fundo,(largura_da_tela,1200))
+
+def dinheiro(contar2):
+    font = pygame.font.SysFont(None, 40)
+    text = font.render("Moedas: " + str(contar2),True,yellow)
+    DisplayDoJogo.blit(text,(0,25))
+
+>>>>>>> origin/master
 def desvio(contar):
     font = pygame.font.SysFont(None, 40)
     text = font.render("Score: " + str(contar),True,green)
@@ -59,11 +78,19 @@ def mensagem(text):
     loop_jogo()
 
 def bater():
-    #pygame.mixer.music.stop()
+    pygame.mixer.music.stop()
     #pygame.mixer.Sound.play(faustao)
     mensagem('ERROOOOU!!!')
     Score = 0
 
+<<<<<<< HEAD
+=======
+def moeda(x,y):
+    DisplayDoJogo.blit(moedass,(x,y))
+
+def fundo(x,y):
+    DisplayDoJogo.blit(Imagem_Fundo,(x,y))
+>>>>>>> origin/master
         
 def imagem_carro(a,b):
     DisplayDoJogo.blit(imgcarro,(a,b))
@@ -103,11 +130,21 @@ def loop_jogo():
     def fundo(x,y):
         DisplayDoJogo.blit(Imagem_Fundo,(x,y))
     
+<<<<<<< HEAD
     pygame.mixer.music.play()
         
     velocidade_fundo = 10
+=======
+    velocidade_fundo = 5
+>>>>>>> origin/master
     posição_inicial_fundo_y = -600
     posição_inicial_fundo_x = 0
+
+    moedaX = random.choice([210,375,540])
+    moedaY = -600
+    moedaH = 35
+    moedaW = 46
+    velocidade_moeda = velocidade_fundo
     
     posição_lourencoX = random.choice([210,375,540])
     posição_lourencoY = random.randrange(-2000,0)
@@ -145,6 +182,7 @@ def loop_jogo():
     carX = 57
     carY = 106
     Score = 0
+    Moedas = 0
     
     Não_Rodar_Jogo = False
 
@@ -236,7 +274,21 @@ def loop_jogo():
         posição_haddadY += velocidade_haddad   
         posição_viniciusY += velocidade_vinicius
         posição_heloisaY += velocidade_heloisa
+
+        moeda(moedaX,moedaY)
+        moedaY += velocidade_moeda
+        dinheiro(Moedas)
+        imagem_carro(car_positionX,car_positionY)
+
+        if moedaY > altura_da_tela:
+            moedaY = 0 - moedaH
+            moedaX = random.choice([210,375,540])
         
+        if car_positionY < moedaY + moedaH:
+            if car_positionX > moedaX and car_positionX < moedaX + moedaW or car_positionX + carY > moedaX and car_positionX + carY < moedaX + moedaW:
+                Moedas += 1
+
+                
         
         if car_positionY < posição_lourencoY + prof_altura and car_positionY + carY >= posição_lourencoY + 60: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
               if car_positionX > posição_lourencoX and car_positionX < posição_lourencoX + prof_largura or car_positionX+carX > posição_lourencoX and car_positionX + carX < posição_lourencoX+prof_largura:
@@ -266,7 +318,7 @@ def loop_jogo():
               if car_positionX > posição_heloisaX and car_positionX < posição_heloisaX + prof_largura or car_positionX+carX > posição_heloisaX and car_positionX + carX < posição_heloisaX+prof_largura:
                   bater()                  
         
-        
+        #pygame.mixer.Sound.stop(faustao)
         pygame.display.update()
         framespersecond.tick(fps)
 def intinicial():
@@ -328,4 +380,8 @@ intinicial()
 
 loop_jogo()
 pygame.quit()
+<<<<<<< HEAD
 quit()
+=======
+quit()
+>>>>>>> origin/master

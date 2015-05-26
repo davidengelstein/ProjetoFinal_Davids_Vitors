@@ -30,12 +30,13 @@ clock = pygame.time.Clock()
 carrinho = pygame.image.load("carro.png")
 arqPista = pygame.image.load("pista.png")
 arqvidas = pygame.image.load("vida.png")
-dardos = pygame.image.load("dardo.png")
+
 dardo2 = pygame.image.load("tiro2.png")
+bala = pygame.image.load("bala.png")
 cubo = pygame.image.load("caixinha.png")
 
 def tiros(tirosx,tirosy):
-    gameDisplay.blit(dardo2,(tirosx,tirosy))
+    gameDisplay.blit(bala,(tirosx,tirosy))
 
     
 
@@ -145,7 +146,7 @@ def game_loop():
 
         x += x_change
         tirosx += tiros_change
-        tirosx = x*1.1
+        tirosx = x+50
         
         gameDisplay.fill(white)
         
@@ -187,12 +188,9 @@ def game_loop():
             coisa_starty = 0 - coisa_height
             coisa_startx = random.randrange(0, display_width)
             dodged +=1
-        if y < coisa_starty + coisa_height:
+        if y < coisa_starty + coisa_height - 20:
             
             if x > coisa_startx and x < coisa_startx + coisa_width or x+car_width > coisa_startx and x + car_width < coisa_startx + coisa_width:
-                
-            
-                
                 crash()
                     
 
@@ -226,24 +224,13 @@ def game_loop():
             
                     
                     tiros(tirosx,tirosy)
-                    tiros_speed = 10
-                    
-                        
-                    for i in range(1,600):
-                        tiros_speed+=0.000002
-                    
-                    tirosy -= tiros_speed
-    
-                    if tirosy<-100:
-                        if contador>0:
-                            tirosy=y
-                            contador-=1
+
+
+
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_SPACE:
                     tiros(tirosx,tirosy)
-                    tiros_speed = 10
-                    
-                        
+                    tiros_speed = 10                                           
                     for i in range(1,600):
                         tiros_speed+=0.000002
                     
@@ -253,8 +240,9 @@ def game_loop():
                         if contador>0:
                             tirosy=y
                             contador-=1    
-            if tirosy < coisa_starty + coisa_height:
-            
+                            
+                            
+            if tirosy < coisa_starty + coisa_height:            
                 if tirosx > coisa_startx and tirosx < coisa_startx + coisa_width or tirosx+tiros_width > coisa_startx and tirosx + tiros_width < coisa_startx + coisa_width:               
                     coisa_starty=-800
                     coisa_startx = random.randrange(0, display_width)
