@@ -30,7 +30,7 @@ clock = pygame.time.Clock()
 carrinho = pygame.image.load("carro.png")
 arqPista = pygame.image.load("pista.png")
 arqvidas = pygame.image.load("vida.png")
-dardos = pygame.image.load("dardo.png")
+
 dardo2 = pygame.image.load("tiro2.png")
 cubo = pygame.image.load("caixinha.png")
 
@@ -228,6 +228,7 @@ def game_loop():
                     
                     tiros(tirosx,tirosy)
                     tiros_speed = 10
+            
                     
                         
                     for i in range(1,600):
@@ -240,6 +241,27 @@ def game_loop():
                             tirosy=y
                             contador-=1
                             
+                            
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_SPACE:
+                    tiros(tirosx,tirosy)
+                    tiros_speed = 10
+                    
+                    for i in range(1,600):
+                        tiros_speed+=0.000002
+                    
+                    tirosy -= tiros_speed
+                    if tirosy<-100:
+                        if contador>0:
+                            tirosy=y
+                            contador-=1
+                            
+                    
+                    
+                    
+                            
+                            
+                
                     
 
                     

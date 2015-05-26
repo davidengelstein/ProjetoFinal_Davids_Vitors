@@ -2,7 +2,7 @@
 """
 Created on Mon May 11 20:01:53 2015
 @author: vitor_000,vitor_kitahara
-"""
+ """
 
 import pygame
 import random
@@ -216,16 +216,16 @@ def loop_jogo():
             posição_heloisaY = 0 - random.randrange(100,2500)
             posição_heloisaX = random.choice([210,375,540])
             Score += 1
-            
-        imagem_carro(car_positionX,car_positionY)
         
+        haddad1(posição_haddadX,posição_haddadY)
+        vinicius1(posição_viniciusX,posição_viniciusY)
         lourenco1(posição_lourencoX,posição_lourencoY)
         miranda1(posição_mirandaX,posição_mirandaY)
         orfali1(posição_orfaliX,posição_orfaliY)
         fred1(posição_fredX,posição_fredY)
-        haddad1(posição_haddadX,posição_haddadY)
-        vinicius1(posição_viniciusX,posição_viniciusY)
         heloisa1(posição_heloisaX,posição_heloisaY)
+        
+        imagem_carro(car_positionX,car_positionY)
         
         posição_lourencoY += velocidade_lourenco        
         posição_mirandaY += velocidade_miranda
