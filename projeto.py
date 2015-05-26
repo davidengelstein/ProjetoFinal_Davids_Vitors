@@ -32,10 +32,11 @@ arqPista = pygame.image.load("pista.png")
 arqvidas = pygame.image.load("vida.png")
 dardos = pygame.image.load("dardo.png")
 dardo2 = pygame.image.load("tiro2.png")
+bala = pygame.image.load("bala.png")
 cubo = pygame.image.load("caixinha.png")
 
 def tiros(tirosx,tirosy):
-    gameDisplay.blit(dardo2,(tirosx,tirosy))
+    gameDisplay.blit(bala,(tirosx,tirosy))
 
     
 
@@ -145,7 +146,7 @@ def game_loop():
 
         x += x_change
         tirosx += tiros_change
-        tirosx = x*1.1
+        tirosx = x+50
         
         gameDisplay.fill(white)
         
