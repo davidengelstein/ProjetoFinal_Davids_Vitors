@@ -25,7 +25,7 @@ altura_da_tela = 600
 
 gameDisplay = pygame.display.set_mode((largura_da_tela,altura_da_tela))
 
-fps = 200
+fps = 1000
 
 imgcarro = pygame.image.load('car8bits2.png')
 lourenco = pygame.image.load('lor.png')
@@ -37,7 +37,7 @@ heloisa = pygame.image.load('helo2.png')
 vinicius = pygame.image.load('vinicius1.png')
 moedass = pygame.image.load('moeda.png')
 musica = pygame.mixer.music.load('uptown8bits.wav')
-faustao = pygame.mixer.Sound('faustao.wav')
+#faustao = pygame.mixer.Sound('faustao.wav')
 
 Imagem_Fundo = pygame.image.load('8bitsRoad.png')
 Imagem_Fundo = pygame.transform.scale(Imagem_Fundo,(largura_da_tela,1200))
@@ -67,7 +67,7 @@ def mensagem(text):
 
 def bater():
     pygame.mixer.music.stop()
-    pygame.mixer.Sound.play(faustao)
+    #pygame.mixer.Sound.play(faustao)
     mensagem('ERROOOOU!!!')
     Score = 0
 
@@ -112,7 +112,7 @@ Não_Rodar_Jogo = False
 def loop_jogo():
     pygame.mixer.music.play()
     
-    velocidade_fundo = 2
+    velocidade_fundo = 5
     posição_inicial_fundo_y = -600
     posição_inicial_fundo_x = 0
 
@@ -294,7 +294,7 @@ def loop_jogo():
               if car_positionX > posição_heloisaX and car_positionX < posição_heloisaX + prof_largura or car_positionX+carX > posição_heloisaX and car_positionX + carX < posição_heloisaX+prof_largura:
                   bater()                  
         
-        pygame.mixer.Sound.stop(faustao)
+        #pygame.mixer.Sound.stop(faustao)
         pygame.display.update()
         framespersecond.tick(fps)
 
