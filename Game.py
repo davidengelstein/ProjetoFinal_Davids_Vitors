@@ -35,7 +35,7 @@ haddad = pygame.image.load('had1.png')
 heloisa = pygame.image.load('helo2.png')
 vinicius = pygame.image.load('vinicius1.png')
 
-#musica = pygame.mixer.music.load('uptown8bits.wav')
+musica = pygame.mixer.music.load('uptown8bits.wav')
 #faustao = pygame.mixer.Sound('Faustao.mp3')
 
 Imagem_Fundo = pygame.image.load('fundo.png')
@@ -101,7 +101,7 @@ Não_Rodar_Jogo = False
 
 
 def loop_jogo():
-    #pygame.mixer.music.play()
+    pygame.mixer.music.play()
     
     velocidade_fundo = 10
     posição_inicial_fundo_y = -600
