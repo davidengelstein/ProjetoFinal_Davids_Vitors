@@ -18,6 +18,7 @@ white = (255,255,255)
 blue = (0,0,255)
 green = (0,255,0)
 red = (255,0,0)
+blackb = (200,200,200)
 
 largura_da_tela = 800 #eixox
 altura_da_tela = 600
@@ -35,11 +36,9 @@ haddad = pygame.image.load('had1.png')
 heloisa = pygame.image.load('helo2.png')
 vinicius = pygame.image.load('vinicius1.png')
 
+
 musica = pygame.mixer.music.load('uptown8bits.wav')
 #faustao = pygame.mixer.Sound('Faustao.mp3')
-
-Imagem_Fundo = pygame.image.load('fundo.png')
-Imagem_Fundo = pygame.transform.scale(Imagem_Fundo,(largura_da_tela,1200))
 
 def desvio(contar):
     font = pygame.font.SysFont(None, 40)
@@ -65,8 +64,6 @@ def bater():
     mensagem('ERROOOOU!!!')
     Score = 0
 
-def fundo(x,y):
-    DisplayDoJogo.blit(Imagem_Fundo,(x,y))
         
 def imagem_carro(a,b):
     DisplayDoJogo.blit(imgcarro,(a,b))
@@ -101,8 +98,13 @@ Não_Rodar_Jogo = False
 
 
 def loop_jogo():
-    pygame.mixer.music.play()
+    Imagem_Fundo = pygame.image.load('fundo.png')   
+    Imagem_Fundo = pygame.transform.scale(Imagem_Fundo,(largura_da_tela,1200))
+    def fundo(x,y):
+        DisplayDoJogo.blit(Imagem_Fundo,(x,y))
     
+    pygame.mixer.music.play()
+        
     velocidade_fundo = 10
     posição_inicial_fundo_y = -600
     posição_inicial_fundo_x = 0
@@ -183,7 +185,7 @@ def loop_jogo():
             posição_inicial_fundo_y = -600
         
         if posição_lourencoY > altura_da_tela:
-            posição_lourencoY = 0 - random.randrange(100,4000)
+            posição_lourencoY = 0 - random.randrange(3500,4000)
             posição_lourencoX = random.choice([210,375,540])
             Score += 1
             
@@ -193,7 +195,7 @@ def loop_jogo():
             Score += 1
         
         if posição_orfaliY > altura_da_tela:
-            posição_orfaliY = 0 - random.randrange(100,1000)
+            posição_orfaliY = 0 - random.randrange(6000,7000)
             posição_orfaliX = random.choice([210,375,540])
             Score += 1
             
@@ -203,12 +205,12 @@ def loop_jogo():
             Score += 1
         
         if posição_haddadY > altura_da_tela:
-            posição_haddadY = 0 - random.randrange(100,10000)
+            posição_haddadY = 0 - random.randrange(5000,10000)
             posição_haddadX = random.choice([210,375,540])
             Score += 1
             
         if posição_viniciusY > altura_da_tela:
-            posição_viniciusY = 0 - random.randrange(100,5000)
+            posição_viniciusY = 0 - random.randrange(2000,5000)
             posição_viniciusX = random.choice([210,375,540])
             Score += 1
         
@@ -267,8 +269,63 @@ def loop_jogo():
         
         pygame.display.update()
         framespersecond.tick(fps)
+def intinicial():
+    
+    interface = pygame.image.load('Fundo1.png')    
+    interface = pygame.transform.scale(interface,(largura_da_tela,altura_da_tela))
+    gameDisplay.blit(interface,(0,0))
+    
+                
+    def button(msg,msg1,msg2,x,y,w,h,ic,ac):
+        while True:
+            for event in pygame.event.get():
+                mouse = pygame.mouse.get_pos()
+                click = pygame.mouse.get_pressed()
+    #            print(mouse)
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    quit()
+                pygame.display.update()
+            
+            if x+w > mouse[0] > x and y + h > mouse[1] > y:   #310,400,180,40 (x,y,w,h)
+                pygame.draw.rect(gameDisplay, ac, (x,y,w,h))
+                if click[0] == 1:
+                    loop_jogo()
+                    
+            else:
+                pygame.draw.rect(gameDisplay, ic, (x,y,w,h))
+                
+            if x+w > mouse[0] > x and y+60+h > mouse[1] > y+60:
+                pygame.draw.rect(gameDisplay, ac, (x,y+60,w,h))
+            else:
+                pygame.draw.rect(gameDisplay, ic, (x,y+60,w,h))
+                
+            if x + w > mouse[0] > x and y+120+h > mouse[1] > y+120:
+                pygame.draw.rect(gameDisplay, ac, (x,y+120,w,h))
+                if click[0] == 1:
+                    pygame.quit()
+                    quit()
+                    
+            else:
+                pygame.draw.rect(gameDisplay, ic, (x,y+120,w,h))
+                
+                            
+            font = pygame.font.SysFont(None, 40)
+            text = font.render(msg,True,white)
+            gameDisplay.blit(text,(363,410))
+        
+            font = pygame.font.SysFont(None, 40)
+            text = font.render(msg1,True,white)
+            gameDisplay.blit(text,(333,470))
+        
+            font = pygame.font.SysFont(None, 40)
+            text = font.render(msg2,True,white)
+            gameDisplay.blit(text,(363,530))
+            
+            
+    button('PLAY','RANKING','QUIT',310,400,180,40,black,blackb)                        
+intinicial()
 
 loop_jogo()
 pygame.quit()
 quit()
-
