@@ -188,12 +188,9 @@ def game_loop():
             coisa_starty = 0 - coisa_height
             coisa_startx = random.randrange(0, display_width)
             dodged +=1
-        if y < coisa_starty + coisa_height:
+        if y < coisa_starty + coisa_height - 20:
             
             if x > coisa_startx and x < coisa_startx + coisa_width or x+car_width > coisa_startx and x + car_width < coisa_startx + coisa_width:
-                
-            
-                
                 crash()
                     
 
@@ -223,16 +220,10 @@ def game_loop():
                 quit()        
             
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:        
+                if event.key == pygame.K_SPACE:
+            
+                    
                     tiros(tirosx,tirosy)
-                    tiros_speed = 10
-                    for i in range(1,600):
-                        tiros_speed+=0.000002
-                        tirosy -= tiros_speed
-                    if tirosy<-100:
-                        if contador>0:
-                            tirosy=y
-                            contador-=1
 
 
 
@@ -241,8 +232,10 @@ def game_loop():
                     tiros(tirosx,tirosy)
                     tiros_speed = 10                                           
                     for i in range(1,600):
-                        tiros_speed+=0.000002                    
-                        tirosy -= tiros_speed
+                        tiros_speed+=0.000002
+                    
+                    tirosy -= tiros_speed
+    
                     if tirosy<-100:
                         if contador>0:
                             tirosy=y
