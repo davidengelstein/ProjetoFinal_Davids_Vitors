@@ -7,6 +7,7 @@ Created on Mon May 11 20:01:53 2015
 import pygame
 import random
 import time
+from random import choice
 
 pygame.init()
 pygame.display.set_caption('Teachers Game Race') #Nome do jogo a ser decidido
@@ -18,11 +19,11 @@ white = (255,255,255)
 blue = (0,0,255)
 green = (0,255,0)
 red = (255,0,0)
-<<<<<<< HEAD
+
 blackb = (200,200,200)
-=======
+
 yellow = (255,242,0)
->>>>>>> origin/master
+
 
 largura_da_tela = 800 #eixox
 altura_da_tela = 600
@@ -39,26 +40,38 @@ fred = pygame.image.load('fred1.png')
 haddad = pygame.image.load('had1.png')
 heloisa = pygame.image.load('helo2.png')
 vinicius = pygame.image.load('vinicius1.png')
-<<<<<<< HEAD
+bala = pygame.image.load("bala.png")
+cubo = pygame.image.load("caixinha.png")
 
 
-=======
 moedass = pygame.image.load('moeda.png')
->>>>>>> origin/master
+
 musica = pygame.mixer.music.load('uptown8bits.wav')
 #faustao = pygame.mixer.Sound('faustao.wav')
 
-<<<<<<< HEAD
-=======
+
 Imagem_Fundo = pygame.image.load('8bitsRoad.png')
 Imagem_Fundo = pygame.transform.scale(Imagem_Fundo,(largura_da_tela,1200))
+
+def tiros(tirosx,tirosy):
+    gameDisplay.blit(bala,(tirosx,tirosy))
+
+    
+
+def cubos_contador(cont):
+    font = pygame.font.SysFont(None, 25)
+    text = font.render("tiros: "+str(cont), True, black)
+    gameDisplay.blit(text,(0,20))
+
+def func_cubos(cubosx,cubosy):
+    gameDisplay.blit(cubo,(cubosx,cubosy))
 
 def dinheiro(contar2):
     font = pygame.font.SysFont(None, 40)
     text = font.render("Moedas: " + str(contar2),True,yellow)
     DisplayDoJogo.blit(text,(0,25))
 
->>>>>>> origin/master
+
 def desvio(contar):
     font = pygame.font.SysFont(None, 40)
     text = font.render("Score: " + str(contar),True,green)
@@ -83,14 +96,13 @@ def bater():
     mensagem('ERROOOOU!!!')
     Score = 0
 
-<<<<<<< HEAD
-=======
+
 def moeda(x,y):
     DisplayDoJogo.blit(moedass,(x,y))
 
 def fundo(x,y):
     DisplayDoJogo.blit(Imagem_Fundo,(x,y))
->>>>>>> origin/master
+
         
 def imagem_carro(a,b):
     DisplayDoJogo.blit(imgcarro,(a,b))
@@ -130,13 +142,13 @@ def loop_jogo():
     def fundo(x,y):
         DisplayDoJogo.blit(Imagem_Fundo,(x,y))
     
-<<<<<<< HEAD
+
     pygame.mixer.music.play()
         
-    velocidade_fundo = 10
-=======
     velocidade_fundo = 5
->>>>>>> origin/master
+
+    
+
     posição_inicial_fundo_y = -600
     posição_inicial_fundo_x = 0
 
@@ -184,6 +196,21 @@ def loop_jogo():
     Score = 0
     Moedas = 0
     
+    cubosx = choice([275,330,525])
+    cubosy = 0
+    cubos_speed = velocidade_fundo
+    cubos_compr=100
+    cubos_larg=120
+    
+    tirosx = car_positionX
+    tirosy = car_positionY
+    tiros_speed=1
+    tiros_change = 0
+    tiros_width = 10
+    tiros_compr = 100
+    
+    contador = 0
+    
     Não_Rodar_Jogo = False
 
     while not Não_Rodar_Jogo:
@@ -210,7 +237,8 @@ def loop_jogo():
 
         fundo(posição_inicial_fundo_x,posição_inicial_fundo_y)    
         posição_inicial_fundo_y += velocidade_fundo
-
+        func_cubos(cubosx, cubosy)
+        cubosy += cubos_speed
         desvio(Score)
 
         if car_positionX > 637 - carX or car_positionX < 157:
@@ -256,9 +284,19 @@ def loop_jogo():
             posição_heloisaY = 0 - random.randrange(100,2500)
             posição_heloisaX = random.choice([210,375,540])
             Score += 1
+        if car_positionY < cubosy + cubos_compr:
+            if car_positionX > cubosx and car_positionX < cubosx + cubos_larg or car_positionX+carX > cubosx and car_positionX + carX < cubosx + cubos_larg:
             
+                cubosy = (altura_da_tela-3000)
+                cubosx = random.randrange(0, largura_da_tela)
+                contador+=1
+                
+            else:
+                if cubosy > 800:
+                    cubosy = (altura_da_tela-3000)
+                    
         imagem_carro(car_positionX,car_positionY)
-        
+        cubos_contador(contador)
         lourenco1(posição_lourencoX,posição_lourencoY)
         miranda1(posição_mirandaX,posição_mirandaY)
         orfali1(posição_orfaliX,posição_orfaliY)
@@ -380,8 +418,6 @@ intinicial()
 
 loop_jogo()
 pygame.quit()
-<<<<<<< HEAD
+
 quit()
-=======
-quit()
->>>>>>> origin/master
+
