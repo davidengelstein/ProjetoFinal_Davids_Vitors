@@ -59,9 +59,9 @@ def tiros(tirosx,tirosy):
     
 
 def cubos_contador(cont):
-    font = pygame.font.SysFont(None, 25)
+    font = pygame.font.SysFont(None, 40)
     text = font.render("tiros: "+str(cont), True, black)
-    gameDisplay.blit(text,(0,20))
+    gameDisplay.blit(text,(0,28))
 
 def func_cubos(cubosx,cubosy):
     gameDisplay.blit(cubo,(cubosx,cubosy))
@@ -69,7 +69,7 @@ def func_cubos(cubosx,cubosy):
 def dinheiro(contar2):
     font = pygame.font.SysFont(None, 40)
     text = font.render("Moedas: " + str(contar2),True,yellow)
-    DisplayDoJogo.blit(text,(0,25))
+    DisplayDoJogo.blit(text,(0,50))
 
 
 def desvio(contar):
@@ -82,7 +82,7 @@ def text_objects(text, font): #Não entendi muito bem essa função
     return textSurface, textSurface.get_rect() 
 
 def mensagem(text):
-    largeText = pygame.font.Font('freesansbold.ttf',115)
+    largeText = pygame.font.Font('freesansbold.ttf',60)
     TextSurf, TextRect = text_objects(text, largeText)
     TextRect.center = ((largura_da_tela/2),(altura_da_tela/2))
     gameDisplay.blit(TextSurf, TextRect)
@@ -93,7 +93,7 @@ def mensagem(text):
 def bater():
     pygame.mixer.music.stop()
     #pygame.mixer.Sound.play(faustao)
-    mensagem('ERROOOOU!!!')
+    mensagem('ERROOOOU, SEU LIXO!!!')
     Score = 0
 
 
@@ -325,7 +325,8 @@ def loop_jogo():
         if car_positionY < moedaY + moedaH:
             if car_positionX > moedaX and car_positionX < moedaX + moedaW or car_positionX + carY > moedaX and car_positionX + carY < moedaX + moedaW:
                 Moedas += 1
-
+                moedaY = 0 - moedaH
+                moedaX = random.choice([210,375,540])
                 
         
         if car_positionY < posição_lourencoY + prof_altura and car_positionY + carY >= posição_lourencoY + 60: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
