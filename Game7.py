@@ -27,6 +27,13 @@ yellow = (255,242,0)
 largura_da_tela = 800 #eixox
 altura_da_tela = 600
 
+car_positionY = 475
+car_positionX = 375 #esquerda = 210 , meio = 375, direita = 540 - Variando de 165
+carX = 57
+carY = 106
+Score = 0
+Moedas = 0
+
 gameDisplay = pygame.display.set_mode((largura_da_tela,altura_da_tela))
 
 fps = 1000
@@ -35,7 +42,7 @@ imgcarro = pygame.image.load('car8bits2.png')
 lourenco = pygame.image.load('lor.png')
 miranda = pygame.image.load('mir.png')
 orfali = pygame.image.load('orf.png')
-fred = pygame.image.load('fred1.png')
+fred5 = pygame.image.load('fred1.png')
 haddad = pygame.image.load('had1.png')
 heloisa = pygame.image.load('helo2.png')
 vinicius = pygame.image.load('vinicius1.png')
@@ -51,6 +58,8 @@ musica = pygame.mixer.music.load('uptown8bits.wav')
 
 Imagem_Fundo = pygame.image.load('8bitsRoad.png')
 Imagem_Fundo = pygame.transform.scale(Imagem_Fundo,(largura_da_tela,1200))
+
+
 
 def dinheiro(contar2):
     font = pygame.font.SysFont(None, 40)
@@ -103,7 +112,7 @@ def orfali1(r,s):
     DisplayDoJogo.blit(orfali,(r,s))
     
 def fred1(r,s):
-    DisplayDoJogo.blit(fred,(r,s))
+    DisplayDoJogo.blit(fred5,(r,s))
     
 def haddad1(r,s):
     DisplayDoJogo.blit(haddad,(r,s))
@@ -216,12 +225,7 @@ def loop_jogo():
     prof_largura = 60
     prof_altura = 60
     
-    car_positionY = 475
-    car_positionX = 375 #esquerda = 210 , meio = 375, direita = 540 - Variando de 165
-    carX = 57
-    carY = 106
-    Score = 0
-    Moedas = 0
+
     
     Não_Rodar_Jogo = False
 
@@ -317,13 +321,13 @@ def loop_jogo():
         heloisa1(hel.titulo1,hel.titulo2)
         
         
-        posição_lourencoY += velocidade_fundo        
-        posição_mirandaY += velocidade_fundo
-        posição_orfaliY += velocidade_fundo
-        posição_fredY += velocidade_fundo           
-        posição_haddadY += velocidade_fundo   
-        posição_viniciusY += velocidade_fundo
-        posição_heloisaY += velocidade_fundo
+        lor.titulo2 += velocidade_fundo        
+        mir.titulo2 += velocidade_fundo
+        orf.titulo2 += velocidade_fundo
+        fred.titulo2 += velocidade_fundo           
+        had.titulo2 += velocidade_fundo   
+        vin.titulo2 += velocidade_fundo
+        hel.titulo2 += velocidade_fundo
         
 
         moeda(moedaX,moedaY)
