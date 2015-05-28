@@ -231,8 +231,7 @@ def game_loop():
                 if event.key == pygame.K_SPACE:
                     tiros(tirosx,tirosy)
                     tiros_speed = 10                                           
-                    for i in range(1,600):
-                        tiros_speed+=0.000002
+                    
                     
                     tirosy -= tiros_speed
     

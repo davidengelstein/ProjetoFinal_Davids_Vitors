@@ -284,6 +284,7 @@ def loop_jogo():
             posição_heloisaY = 0 - random.randrange(100,2500)
             posição_heloisaX = random.choice([210,375,540])
             Score += 1
+            
         if car_positionY < cubosy + cubos_compr:
             if car_positionX > cubosx and car_positionX < cubosx + cubos_larg or car_positionX+carX > cubosx and car_positionX + carX < cubosx + cubos_larg:
             
@@ -358,7 +359,7 @@ def loop_jogo():
               if car_positionX > posição_heloisaX and car_positionX < posição_heloisaX + prof_largura or car_positionX+carX > posição_heloisaX and car_positionX + carX < posição_heloisaX+prof_largura:
                   bater()                  
         
-        
+      
         if contador > 0:    
             if tecla.type == pygame.QUIT:
                 pygame.quit()
@@ -366,28 +367,24 @@ def loop_jogo():
             
             if tecla.type == pygame.KEYDOWN:
                 if tecla.key == pygame.K_SPACE:
-            
-                    
+                    tirosx = car_positionX
                     tiros(tirosx,tirosy)
+                    
 
             if tecla.type == pygame.KEYUP:
                 if tecla.key == pygame.K_SPACE:
+                    tirosx = car_positionX
                     tiros(tirosx,tirosy)
                     tiros_speed = 10
-                    tirosx = car_positionX
-                    
-                        
-                    for i in range(1,600):
-                        tiros_speed+=0.000002
-                    
                     tirosy -= tiros_speed
+                
                     
-                    if tirosy<-100:
-                        if contador>0:
-                            tirosy=car_positionY
-                            contador-=1
+            if tirosy<-100:
+                    if contador>0:
+                        tirosy=car_positionY
+                        contador-=1
                             
-                                        
+                                            
         if tirosy  < posição_mirandaY + prof_altura and tirosy + tiros_width >= posição_mirandaY + 60: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
             if tirosx > posição_mirandaX and tirosx < posição_mirandaX + prof_largura or tirosx+tiros_width > posição_mirandaX and tirosx + tiros_width < posição_mirandaX+prof_largura:
                 posição_mirandaY = -1000
