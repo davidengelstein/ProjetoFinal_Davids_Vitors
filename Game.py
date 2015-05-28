@@ -40,7 +40,7 @@ fred = pygame.image.load('fred1.png')
 haddad = pygame.image.load('had1.png')
 heloisa = pygame.image.load('helo2.png')
 vinicius = pygame.image.load('vinicius1.png')
-bala = pygame.image.load("bala.png")
+bala = pygame.image.load("tiro2.png")
 cubo = pygame.image.load("caixinha.png")
 
 
