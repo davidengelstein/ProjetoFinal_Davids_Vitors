@@ -52,11 +52,6 @@ musica = pygame.mixer.music.load('uptown8bits.wav')
 Imagem_Fundo = pygame.image.load('8bitsRoad.png')
 Imagem_Fundo = pygame.transform.scale(Imagem_Fundo,(largura_da_tela,1200))
 
-def dinheiro(contar2):
-    font = pygame.font.SysFont(None, 40)
-    text = font.render("Moedas: " + str(contar2),True,yellow)
-    DisplayDoJogo.blit(text,(0,25))
-
 
 def desvio(contar):
     font = pygame.font.SysFont(None, 40)
@@ -113,41 +108,7 @@ def vinicius1(r,s):
     
 def heloisa1(r,s):
     DisplayDoJogo.blit(heloisa,(r,s))
-'''
-class personagens:
-    def __init__(self,titulo1,titulo2):
-        self.titulo1 = titulo1
-        self.titulo2 = titulo2
-    
-    def posiniper(self,random1,random2):
-        self.titulo1 = random.choice([210,375,540])
-        self.titulo2 = random.randrange(random1,random2)
 
-    def posper2(self,random3,random4):
-        if self.titulo2 > altura_da_tela:
-            self.titulo2 = 0 - random.randrange(random3,random4)
-            self.titulo1 = random.choice([210,375,540])
-            Score += 1
-    
-    def crash(self):
-        if car_positionY < self.titulo2 + prof_altura and car_positionY + carY >= self.titulo2 + 60: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
-              if car_positionX > self.titulo1 and car_positionX < self.titulo1 + prof_largura or car_positionX + carX > self.titulo1 and car_positionX + carX < self.titulo1 + prof_largura:
-                  bater()
-
-    def crash2 (self,value):
-        if car_positionY < self.titulo2 + prof_altura and car_positionY + carY >= self.titulo2 + 60: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
-              if car_positionX > self.titulo1 and car_positionX < self.titulo1 + prof_largura or car_positionX + carX > self.titulo1 and car_positionX + carX < self.titulo1 + prof_largura:
-                Score += value
-
-lor = personagens('posição_lourençoX','posição_lourençoY')
-mir = personagens('posição_mirandaX','posição_mirandaY')
-orf = personagens('posição_orfaliX','posição_orfaliY')
-fred = personagens('posição_fredX','posição_fredY')
-had = personagens('posição_haddadX','posição_haddadY')
-vin = personagens('posição_viniciusX','posição_viniciusY')
-hel = personagens('posição_heloisaX','posição_heloisaY')
-
-'''
 DisplayDoJogo = pygame.display.set_mode((largura_da_tela,altura_da_tela))
     
 
@@ -168,52 +129,6 @@ def loop_jogo():
     posição_inicial_fundo_y = -600
     posição_inicial_fundo_x = 0
 
-    moedaX = random.choice([210,375,540])
-    moedaY = -600
-    moedaH = 35
-    moedaW = 46
-    velocidade_moeda = velocidade_fundo
- 
-    '''
-    posição_lourencoX = random.choice([210,375,540])
-    posição_lourencoY = random.randrange(-2000,0)
-    
-    
-    posição_mirandaX = random.choice([210,375,540])
-    posição_mirandaY = random.randrange(-3000,0)
-    
-    
-    posição_orfaliX = random.choice([210,375,540])
-    posição_orfaliY = random.randrange(-2000,0)
-    
-    
-    posição_fredX = random.choice([210,375,540])
-    posição_fredY = random.randrange(-2500,0)
-    
-    
-    posição_haddadX = random.choice([210,375,540])
-    posição_haddadY = random.randrange(-10000,0)
-    
-    
-    posição_viniciusX = random.choice([210,375,540])
-    posição_viniciusY = random.randrange(-5000,0)
-    
-    
-    posição_heloisaX = random.choice([210,375,540])
-    posição_heloisaY = random.randrange(-2500,0)
-    '''
-    
-    '''
-    lor.posiniper(-2000,0)
-    mir.posiniper(-3000,0)
-    orf.posiniper(-2000,0)
-    fred.posiniper(-2500,0)
-    had.posiniper(-10000,0)
-    vin.posiniper(-5000,0)
-    hel.posiniper(-2500,0)
-    '''
-
-
     prof_largura = 60
     prof_altura = 60
     
@@ -222,12 +137,55 @@ def loop_jogo():
     carX = 57
     carY = 106
     Score = 0
-    Moedas = 0
+    
+    
+    class personagens:
+        def __init__(self,titulo1,titulo2):
+            self.titulo1 = titulo1
+            self.titulo2 = titulo2
+            self.Score = 0
+            
+        def posiniper(self,random1,random2):
+            self.titulo1 = random.choice([210,375,540])
+            self.titulo2 = random.randrange(random1,random2)
+
+        def posper2(self,random3,random4):
+            if self.titulo2 > altura_da_tela:
+                self.titulo2 = 0 - random.randrange(random3,random4)
+                self.titulo1 = random.choice([210,375,540])
+                self.Score += 1
+            
+        def crash(self):
+            if car_positionY < self.titulo2 + prof_altura and car_positionY + carY >= self.titulo2 + 60: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
+                if car_positionX > self.titulo1 and car_positionX < self.titulo1 + prof_largura or car_positionX + carX > self.titulo1 and car_positionX + carX < self.titulo1 + prof_largura:
+                    bater()
+
+        def crash2 (self,value):
+            if car_positionY < self.titulo2 + prof_altura and car_positionY + carY >= self.titulo2 + 60: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
+                if car_positionX > self.titulo1 and car_positionX < self.titulo1 + prof_largura or car_positionX + carX > self.titulo1 and car_positionX + carX < self.titulo1 + prof_largura:
+                    self.Score += value
+
+    lor = personagens('posição_lourençoX','posição_lourençoY')
+    mir = personagens('posição_mirandaX','posição_mirandaY')
+    orf = personagens('posição_orfaliX','posição_orfaliY')
+    fred = personagens('posição_fredX','posição_fredY')
+    had = personagens('posição_haddadX','posição_haddadY')
+    vin = personagens('posição_viniciusX','posição_viniciusY')
+    hel = personagens('posição_heloisaX','posição_heloisaY')
+
+
+    lor.posiniper(-2000,0)
+    mir.posiniper(-3000,0)
+    orf.posiniper(-2000,0)
+    fred.posiniper(-2500,0)
+    had.posiniper(-10000,0)
+    vin.posiniper(-5000,0)
+    hel.posiniper(-2500,0)
     
     Não_Rodar_Jogo = False
 
     while not Não_Rodar_Jogo:
-    
+
         for tecla in pygame.event.get():
             
             if tecla.type == pygame.QUIT:
@@ -247,50 +205,11 @@ def loop_jogo():
                 elif car_positionX == 540 and tecla.key == pygame.K_LEFT:
                     car_positionX = 375
 
-        class personagens:
-            def __init__(self,titulo1,titulo2):
-                self.titulo1 = titulo1
-                self.titulo2 = titulo2
-            
-            def posiniper(self,random1,random2):
-                self.titulo1 = random.choice([210,375,540])
-                self.titulo2 = random.randrange(random1,random2)
-
-            def posper2(self,random3,random4):
-                if self.titulo2 > altura_da_tela:
-                    self.titulo2 = 0 - random.randrange(random3,random4)
-                    self.titulo1 = random.choice([210,375,540])
-                    Score += 1
-            
-            def crash(self):
-                if car_positionY < self.titulo2 + prof_altura and car_positionY + carY >= self.titulo2 + 60: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
-                      if car_positionX > self.titulo1 and car_positionX < self.titulo1 + prof_largura or car_positionX + carX > self.titulo1 and car_positionX + carX < self.titulo1 + prof_largura:
-                          bater()
-
-            def crash2 (self,value):
-                if car_positionY < self.titulo2 + prof_altura and car_positionY + carY >= self.titulo2 + 60: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
-                      if car_positionX > self.titulo1 and car_positionX < self.titulo1 + prof_largura or car_positionX + carX > self.titulo1 and car_positionX + carX < self.titulo1 + prof_largura:
-                        Score += value
-
-        lor = personagens('posição_lourençoX','posição_lourençoY')
-        mir = personagens('posição_mirandaX','posição_mirandaY')
-        orf = personagens('posição_orfaliX','posição_orfaliY')
-        fred = personagens('posição_fredX','posição_fredY')
-        had = personagens('posição_haddadX','posição_haddadY')
-        vin = personagens('posição_viniciusX','posição_viniciusY')
-        hel = personagens('posição_heloisaX','posição_heloisaY')
-
-        lor.posiniper(-2000,0)
-        mir.posiniper(-3000,0)
-        orf.posiniper(-2000,0)
-        fred.posiniper(-2500,0)
-        had.posiniper(-10000,0)
-        vin.posiniper(-5000,0)
-        hel.posiniper(-2500,0)
-                    
 
         fundo(posição_inicial_fundo_x,posição_inicial_fundo_y)    
         posição_inicial_fundo_y += velocidade_fundo
+
+
 
         desvio(Score)
 
@@ -302,43 +221,6 @@ def loop_jogo():
                 
         if posição_inicial_fundo_y == 0:
             posição_inicial_fundo_y = -600
-        
-        '''
-        if posição_lourencoY > altura_da_tela:
-            posição_lourencoY = 0 - random.randrange(3500,4000)
-            posição_lourencoX = random.choice([210,375,540])
-            Score += 1
-            
-        if posição_mirandaY > altura_da_tela:
-            posição_mirandaY = 0 - random.randrange(100,3000)
-            posição_mirandaX = random.choice([210,375,540])
-            Score += 1
-        
-        if posição_orfaliY > altura_da_tela:
-            posição_orfaliY = 0 - random.randrange(6000,7000)
-            posição_orfaliX = random.choice([210,375,540])
-            Score += 1
-            
-        if posição_fredY > altura_da_tela:
-            posição_fredY = 0 - random.randrange(100,2500)
-            posição_fredX = random.choice([210,375,540])
-            Score += 1
-        
-        if posição_haddadY > altura_da_tela:
-            posição_haddadY = 0 - random.randrange(5000,10000)
-            posição_haddadX = random.choice([210,375,540])
-            Score += 1
-            
-        
-        if posição_viniciusY > altura_da_tela:
-            posição_viniciusY = 0 - random.randrange(2000,5000)
-            posição_viniciusX = random.choice([210,375,540])
-            Score += 1
-        if posição_heloisaY > altura_da_tela:
-            posição_heloisaY = 0 - random.randrange(100,2500)
-            posição_heloisaX = random.choice([210,375,540])
-            Score += 1
-        '''
 
         lor.posper2(3500,4000)
         mir.posper2(100,3000)
@@ -347,6 +229,7 @@ def loop_jogo():
         had.posper2(5000,10000)
         vin.posper2(2000,5000)
         hel.posper2(100,2500)
+        
             
         imagem_carro(car_positionX,car_positionY)
         
@@ -368,51 +251,7 @@ def loop_jogo():
         hel.titulo2 += velocidade_fundo
         
 
-        moeda(moedaX,moedaY)
-        moedaY += velocidade_moeda
-        dinheiro(Moedas)
         imagem_carro(car_positionX,car_positionY)
-
-        if moedaY > altura_da_tela:
-            moedaY = 0 - moedaH
-            moedaX = random.choice([210,375,540])
-        
-        if car_positionY < moedaY + moedaH:
-            if car_positionX > moedaX and car_positionX < moedaX + moedaW or car_positionX + carY > moedaX and car_positionX + carY < moedaX + moedaW:
-                Moedas += 1
-        '''
-        if car_positionY < posição_lourencoY + prof_altura and car_positionY + carY >= posição_lourencoY + 60: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
-              if car_positionX > posição_lourencoX and car_positionX < posição_lourencoX + prof_largura or car_positionX+carX > posição_lourencoX and car_positionX + carX < posição_lourencoX+prof_largura:
-                  bater()
-        
-        if car_positionY  < posição_mirandaY + prof_altura and car_positionY + carY >= posição_mirandaY + 60: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
-              if car_positionX > posição_mirandaX and car_positionX < posição_mirandaX + prof_largura or car_positionX+carX > posição_mirandaX and car_positionX + carX < posição_mirandaX+prof_largura:
-                  bater()
-
-        if car_positionY  < posição_orfaliY + prof_altura and car_positionY + carY >= posição_orfaliY + 60: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
-              if car_positionX > posição_orfaliX and car_positionX < posição_orfaliX + prof_largura or car_positionX+carX > posição_orfaliX and car_positionX + carX < posição_orfaliX+prof_largura:
-                  bater()
-                  
-        if car_positionY  < posição_fredY + prof_altura and car_positionY + carY >= posição_fredY + 60: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
-              if car_positionX > posição_fredX and car_positionX < posição_fredX + prof_largura or car_positionX+carX > posição_fredX and car_positionX + carX < posição_fredX+prof_largura:
-                  bater()
-
-        if car_positionY  < posição_haddadY + prof_altura: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
-              if car_positionX > posição_haddadX and car_positionX < posição_haddadX + prof_largura or car_positionX+carX > posição_haddadX and car_positionX + carX < posição_haddadX+prof_largura:
-                  Score += 2
-
-        if car_positionY < posição_viniciusY + prof_altura: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
-              if car_positionX > posição_viniciusX and car_positionX < posição_viniciusX + prof_largura or car_positionX+carX > posição_viniciusX and car_positionX + carX < posição_viniciusX+prof_largura:
-                  Score += 1
-
-        if car_positionY < posição_heloisaY + prof_altura and car_positionY + carY >= posição_heloisaY + 60: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
-              if car_positionX > posição_heloisaX and car_positionX < posição_heloisaX + prof_largura or car_positionX+carX > posição_heloisaX and car_positionX + carX < posição_heloisaX+prof_largura:
-                  bater()
-        
-        for i in range(1,100):
-            #Score = 40*i
-            #velocidade_fundo += i
-        '''
 
         lor.crash()
         mir.crash()
