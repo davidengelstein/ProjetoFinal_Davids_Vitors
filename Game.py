@@ -40,7 +40,7 @@ fred = pygame.image.load('fred1.png')
 haddad = pygame.image.load('had1.png')
 heloisa = pygame.image.load('helo2.png')
 vinicius = pygame.image.load('vinicius1.png')
-bala = pygame.image.load("tiro2.png")
+bala = pygame.image.load("bala.png")
 cubo = pygame.image.load("caixinha.png")
 
 
@@ -204,7 +204,7 @@ def loop_jogo():
     
     tirosx = car_positionX
     tirosy = car_positionY
-    tiros_speed=1
+    tiros_speed= 1
     tiros_change = 0
     tiros_width = 10
     tiros_compr = 100
@@ -224,16 +224,16 @@ def loop_jogo():
                 
                 if car_positionX == 375 and tecla.key == pygame.K_LEFT:
                     car_positionX = 210
-                    
+                    tirosx = 195
                 elif car_positionX == 210 and tecla.key == pygame.K_RIGHT:
                     car_positionX = 375
-                    
+                    tirosx = 350
                 elif car_positionX == 375 and tecla.key == pygame.K_RIGHT:
                     car_positionX = 540
-                    
+                    tirosx=560
                 elif car_positionX == 540 and tecla.key == pygame.K_LEFT:
                     car_positionX = 375
-                    
+                    tirosx = 350
 
         fundo(posição_inicial_fundo_x,posição_inicial_fundo_y)    
         posição_inicial_fundo_y += velocidade_fundo
@@ -349,10 +349,14 @@ def loop_jogo():
         if car_positionY  < posição_haddadY + prof_altura: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
               if car_positionX > posição_haddadX and car_positionX < posição_haddadX + prof_largura or car_positionX+carX > posição_haddadX and car_positionX + carX < posição_haddadX+prof_largura:
                   Score += 10
-
+                  posição_haddadY = -1500
+                  posição_haddadX = random.choice([210,375,540])
+                  
         if car_positionY < posição_viniciusY + prof_altura: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
               if car_positionX > posição_viniciusX and car_positionX < posição_viniciusX + prof_largura or car_positionX+carX > posição_viniciusX and car_positionX + carX < posição_viniciusX+prof_largura:
                   Score += 5
+                  posição_viniciusY = -1500
+                  posição_viniciusX = random.choice([210,375,540])
 
         if car_positionY < posição_heloisaY + prof_altura and car_positionY + carY >= posição_heloisaY + 60: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
               if car_positionX > posição_heloisaX and car_positionX < posição_heloisaX + prof_largura or car_positionX+carX > posição_heloisaX and car_positionX + carX < posição_heloisaX+prof_largura:
@@ -382,21 +386,38 @@ def loop_jogo():
                     
                     tirosy -= tiros_speed
                     
-                    if tirosy<-100:
+                    if tirosy<0:
                         if contador>0:
                             tirosy=car_positionY
                             contador-=1
                             
                                         
-        if tirosy  < posição_mirandaY + prof_altura and tirosy + tiros_width >= posição_mirandaY + 60: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
+        if tirosy  < posição_mirandaY + prof_altura and tirosy + tiros_width >= posição_mirandaY: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
             if tirosx > posição_mirandaX and tirosx < posição_mirandaX + prof_largura or tirosx+tiros_width > posição_mirandaX and tirosx + tiros_width < posição_mirandaX+prof_largura:
                 posição_mirandaY = -1000
                 posição_mirandaX = random.choice([210,375,540])
-#            if tirosy < coisa_starty + coisa_height:
-#            
-#                if tirosx > coisa_startx and tirosx < coisa_startx + coisa_width or tirosx+tiros_width > coisa_startx and tirosx + tiros_width < coisa_startx + coisa_width:               
-#                    coisa_starty=-800
-#                    coisa_startx = random.randrange(0, display_width)        
+        
+        if tirosy  < posição_lourencoY + prof_altura and tirosy + tiros_width >= posição_lourencoY: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
+            if tirosx > posição_lourencoX and tirosx < posição_lourencoX + prof_largura or tirosx+tiros_width > posição_lourencoX and tirosx + tiros_width < posição_lourencoX+prof_largura:
+                posição_lourencoY = -1000
+                posição_lourencoX = random.choice([210,375,540])
+                
+        if tirosy  < posição_orfaliY + prof_altura and tirosy + tiros_width >= posição_orfaliY: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
+            if tirosx > posição_orfaliX and tirosx < posição_orfaliX + prof_largura or tirosx+tiros_width > posição_orfaliX and tirosx + tiros_width < posição_orfaliX+prof_largura:
+                posição_orfaliY = -1000
+                posição_orfaliX = random.choice([210,375,540])
+                
+        if tirosy  < posição_fredY + prof_altura and tirosy + tiros_width >= posição_fredY: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
+            if tirosx > posição_fredX and tirosx < posição_fredX + prof_largura or tirosx+tiros_width > posição_fredX and tirosx + tiros_width < posição_fredX+prof_largura:
+                posição_fredY = -1000
+                posição_fredX = random.choice([210,375,540])
+                
+                
+                
+        if tirosy  < posição_heloisaY + prof_altura and tirosy + tiros_width >= posição_heloisaY: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
+            if tirosx > posição_heloisaX and tirosx < posição_heloisaX + prof_largura or tirosx+tiros_width > posição_heloisaX and tirosx + tiros_width < posição_heloisaX+prof_largura:
+                posição_heloisaY = -1000
+                posição_heloisaX = random.choice([210,375,540])
         
         #pygame.mixer.Sound.stop(faustao)
         pygame.display.update()
