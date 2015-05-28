@@ -294,7 +294,7 @@ def loop_jogo():
             else:
                 if cubosy > 800:
                     cubosy = (altura_da_tela-3000)
-                    cubosx = choice([270,360,540])
+                    cubosx = choice([230,360,540])
                     
         imagem_carro(car_positionX,car_positionY)
         cubos_contador(contador)
@@ -388,7 +388,10 @@ def loop_jogo():
                             contador-=1
                             
                                         
-                            
+        if tirosy  < posição_mirandaY + prof_altura and tirosy + tiros_width >= posição_mirandaY + 60: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
+            if tirosx > posição_mirandaX and tirosx < posição_mirandaX + prof_largura or tirosx+tiros_width > posição_mirandaX and tirosx + tiros_width < posição_mirandaX+prof_largura:
+                posição_mirandaY = -1000
+                posição_mirandaX = random.choice([210,375,540])
 #            if tirosy < coisa_starty + coisa_height:
 #            
 #                if tirosx > coisa_startx and tirosx < coisa_startx + coisa_width or tirosx+tiros_width > coisa_startx and tirosx + tiros_width < coisa_startx + coisa_width:               
