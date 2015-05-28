@@ -288,12 +288,13 @@ def loop_jogo():
             if car_positionX > cubosx and car_positionX < cubosx + cubos_larg or car_positionX+carX > cubosx and car_positionX + carX < cubosx + cubos_larg:
             
                 cubosy = (altura_da_tela-3000)
-                cubosx = random.randrange(0, largura_da_tela)
+                cubosx = choice([270,360,540])
                 contador+=1
                 
             else:
                 if cubosy > 800:
                     cubosy = (altura_da_tela-3000)
+                    cubosx = choice([270,360,540])
                     
         imagem_carro(car_positionX,car_positionY)
         cubos_contador(contador)
@@ -313,7 +314,7 @@ def loop_jogo():
         posição_viniciusY += velocidade_vinicius
         posição_heloisaY += velocidade_heloisa
 
-        moeda(moedaX,moedaY)
+        #moeda(moedaX,moedaY)
         moedaY += velocidade_moeda
         dinheiro(Moedas)
         imagem_carro(car_positionX,car_positionY)
@@ -356,6 +357,43 @@ def loop_jogo():
         if car_positionY < posição_heloisaY + prof_altura and car_positionY + carY >= posição_heloisaY + 60: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
               if car_positionX > posição_heloisaX and car_positionX < posição_heloisaX + prof_largura or car_positionX+carX > posição_heloisaX and car_positionX + carX < posição_heloisaX+prof_largura:
                   bater()                  
+        
+        
+        if contador > 0:    
+            if tecla.type == pygame.QUIT:
+                pygame.quit()
+                quit()        
+            
+            if tecla.type == pygame.KEYDOWN:
+                if tecla.key == pygame.K_SPACE:
+            
+                    
+                    tiros(tirosx,tirosy)
+
+            if tecla.type == pygame.KEYUP:
+                if tecla.key == pygame.K_SPACE:
+                    tiros(tirosx,tirosy)
+                    tiros_speed = 10
+                    tirosx = car_positionX
+                    
+                        
+                    for i in range(1,600):
+                        tiros_speed+=0.000002
+                    
+                    tirosy -= tiros_speed
+                    
+                    if tirosy<-100:
+                        if contador>0:
+                            tirosy=car_positionY
+                            contador-=1
+                            
+                                        
+                            
+#            if tirosy < coisa_starty + coisa_height:
+#            
+#                if tirosx > coisa_startx and tirosx < coisa_startx + coisa_width or tirosx+tiros_width > coisa_startx and tirosx + tiros_width < coisa_startx + coisa_width:               
+#                    coisa_starty=-800
+#                    coisa_startx = random.randrange(0, display_width)        
         
         #pygame.mixer.Sound.stop(faustao)
         pygame.display.update()
