@@ -224,16 +224,22 @@ def loop_jogo():
                 
                 if car_positionX == 375 and tecla.key == pygame.K_LEFT:
                     car_positionX = 210
-                    tirosx = 195
+                    if tirosy == car_positionY:                    
+                        tirosx = 195
+                    
+                        
                 elif car_positionX == 210 and tecla.key == pygame.K_RIGHT:
                     car_positionX = 375
-                    tirosx = 350
+                    if tirosy == car_positionY:
+                        tirosx = 350
                 elif car_positionX == 375 and tecla.key == pygame.K_RIGHT:
                     car_positionX = 540
-                    tirosx=560
+                    if tirosy == car_positionY:
+                        tirosx=560
                 elif car_positionX == 540 and tecla.key == pygame.K_LEFT:
                     car_positionX = 375
-                    tirosx = 350
+                    if tirosy == car_positionY:
+                        tirosx = 350
 
         fundo(posição_inicial_fundo_x,posição_inicial_fundo_y)    
         posição_inicial_fundo_y += velocidade_fundo
@@ -316,24 +322,18 @@ def loop_jogo():
 
         #moeda(moedaX,moedaY)
         moedaY += velocidade_moeda
-        dinheiro(Moedas)
+        
         imagem_carro(car_positionX,car_positionY)
 
-        if moedaY > altura_da_tela:
-            moedaY = 0 - moedaH
-            moedaX = random.choice([210,375,540])
         
-        if car_positionY < moedaY + moedaH:
-            if car_positionX > moedaX and car_positionX < moedaX + moedaW or car_positionX + carY > moedaX and car_positionX + carY < moedaX + moedaW:
-                Moedas += 1
-                moedaY = 0 - moedaH
-                moedaX = random.choice([210,375,540])
+        
+        
                 
         
         if car_positionY < posição_lourencoY + prof_altura and car_positionY + carY >= posição_lourencoY + 60: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
               if car_positionX > posição_lourencoX and car_positionX < posição_lourencoX + prof_largura or car_positionX+carX > posição_lourencoX and car_positionX + carX < posição_lourencoX+prof_largura:
                   bater()
-        
+            
         if car_positionY  < posição_mirandaY + prof_altura and car_positionY + carY >= posição_mirandaY + 60: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
               if car_positionX > posição_mirandaX and car_positionX < posição_mirandaX + prof_largura or car_positionX+carX > posição_mirandaX and car_positionX + carX < posição_mirandaX+prof_largura:
                   bater()
@@ -360,7 +360,8 @@ def loop_jogo():
 
         if car_positionY < posição_heloisaY + prof_altura and car_positionY + carY >= posição_heloisaY + 60: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
               if car_positionX > posição_heloisaX and car_positionX < posição_heloisaX + prof_largura or car_positionX+carX > posição_heloisaX and car_positionX + carX < posição_heloisaX+prof_largura:
-                  bater()                  
+                  bater()     
+        
         
         
         if contador > 0:    
@@ -370,9 +371,9 @@ def loop_jogo():
             
             if tecla.type == pygame.KEYDOWN:
                 if tecla.key == pygame.K_SPACE:
-            
+                    pass
                     
-                    tiros(tirosx,tirosy)
+                    #tiros(tirosx,tirosy)
 
             if tecla.type == pygame.KEYUP:
                 if tecla.key == pygame.K_SPACE:
@@ -381,8 +382,8 @@ def loop_jogo():
                     tirosx = car_positionX
                     
                         
-                    for i in range(1,600):
-                        tiros_speed+=0.000002
+#                    for i in range(1,600):
+#                        tiros_speed+=0.000002
                     
                     tirosy -= tiros_speed
                     
