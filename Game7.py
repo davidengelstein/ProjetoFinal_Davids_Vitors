@@ -7,6 +7,7 @@ Created on Mon May 11 20:01:53 2015
 import pygame
 import random
 import time
+from random import choice
 
 pygame.init()
 pygame.display.set_caption('Teachers Game Race') #Nome do jogo a ser decidido
@@ -39,19 +40,25 @@ fred5 = pygame.image.load('fred1.png')
 haddad = pygame.image.load('had1.png')
 heloisa = pygame.image.load('helo2.png')
 vinicius = pygame.image.load('vinicius1.png')
-
-
-
-
-moedass = pygame.image.load('moeda.png')
+bala = pygame.image.load("bala.png")
+cubo = pygame.image.load("caixinha.png")
 
 musica = pygame.mixer.music.load('uptown8bits.wav')
 #faustao = pygame.mixer.Sound('faustao.wav')
 
-
 Imagem_Fundo = pygame.image.load('8bitsRoad.png')
 Imagem_Fundo = pygame.transform.scale(Imagem_Fundo,(largura_da_tela,1200))
 
+def tiros(tirosx,tirosy):
+    gameDisplay.blit(bala,(tirosx,tirosy))
+
+def cubos_contador(cont):
+    font = pygame.font.SysFont(None, 40)
+    text = font.render("tiros: "+str(cont), True, black)
+    gameDisplay.blit(text,(0,28))
+
+def func_cubos(cubosx,cubosy):
+    gameDisplay.blit(cubo,(cubosx,cubosy))
 
 def desvio(contar):
     font = pygame.font.SysFont(None, 40)
@@ -136,14 +143,30 @@ def loop_jogo():
     car_positionX = 375 #esquerda = 210 , meio = 375, direita = 540 - Variando de 165
     carX = 57
     carY = 106
-    Score = 0
+
+    cubosx = choice([275,330,525])
+    cubosy = 0
+    cubos_speed = velocidade_fundo
+    cubos_compr=100
+    cubos_larg=120
     
+    tirosx = car_positionX
+    tirosy = car_positionY
+    tiros_speed= 1
+    tiros_change = 0
+    tiros_width = 10
+    tiros_compr = 100
+
+    contador = 0
+    
+    class Jogador:
+        Score = 0
     
     class personagens:
         def __init__(self,titulo1,titulo2):
             self.titulo1 = titulo1
             self.titulo2 = titulo2
-            self.Score = 0
+            
             
         def posiniper(self,random1,random2):
             self.titulo1 = random.choice([210,375,540])
@@ -153,7 +176,8 @@ def loop_jogo():
             if self.titulo2 > altura_da_tela:
                 self.titulo2 = 0 - random.randrange(random3,random4)
                 self.titulo1 = random.choice([210,375,540])
-                self.Score += 1
+                
+                Jogador.Score += 1
             
         def crash(self):
             if car_positionY < self.titulo2 + prof_altura and car_positionY + carY >= self.titulo2 + 60: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
@@ -163,7 +187,8 @@ def loop_jogo():
         def crash2 (self,value):
             if car_positionY < self.titulo2 + prof_altura and car_positionY + carY >= self.titulo2 + 60: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
                 if car_positionX > self.titulo1 and car_positionX < self.titulo1 + prof_largura or car_positionX + carX > self.titulo1 and car_positionX + carX < self.titulo1 + prof_largura:
-                    self.Score += value
+                    
+                    Jogador.Score += value
 
     lor = personagens('posição_lourençoX','posição_lourençoY')
     mir = personagens('posição_mirandaX','posição_mirandaY')
@@ -172,7 +197,6 @@ def loop_jogo():
     had = personagens('posição_haddadX','posição_haddadY')
     vin = personagens('posição_viniciusX','posição_viniciusY')
     hel = personagens('posição_heloisaX','posição_heloisaY')
-
 
     lor.posiniper(-2000,0)
     mir.posiniper(-3000,0)
@@ -185,33 +209,92 @@ def loop_jogo():
     Não_Rodar_Jogo = False
 
     while not Não_Rodar_Jogo:
-
+        
         for tecla in pygame.event.get():
             
             if tecla.type == pygame.QUIT:
                 Não_Rodar_Jogo = True
             
             if tecla.type == pygame.KEYDOWN:
+
                 
                 if car_positionX == 375 and tecla.key == pygame.K_LEFT:
                     car_positionX = 210
+                    if tirosy == car_positionY:                    
+                        tirosx = 210
                     
                 elif car_positionX == 210 and tecla.key == pygame.K_RIGHT:
                     car_positionX = 375
+                    if tirosy == car_positionY:
+                        tirosx = 375
                     
                 elif car_positionX == 375 and tecla.key == pygame.K_RIGHT:
                     car_positionX = 540
+                    if tirosy == car_positionY:
+                        tirosx=540
                     
                 elif car_positionX == 540 and tecla.key == pygame.K_LEFT:
                     car_positionX = 375
+                    if tirosy == car_positionY:
+                        tirosx = 375
+            
+                if tecla.key == pygame.K_SPACE:
+                    pass
+                
+                if contador > 0:    
+                    
+                    if tecla.type == pygame.QUIT:
+                        pygame.quit()
+                        quit()
+
+            if tecla.type == pygame.KEYUP:
+                if tecla.key == pygame.K_SPACE:
+                    tiros(tirosx,tirosy)
+                    tiros_speed = 10
+                    tirosx = car_positionX
+
+                    tirosy -= tiros_speed
+                        
+                    if tirosy<0:
+                        if contador>0:
+                            tirosy=car_positionY
+                            contador-=1
+
+                if tirosy  < mir.titulo2 + prof_altura and tirosy + tiros_width >= mir.titulo2: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
+                    if tirosx > mir.titulo1 and tirosx < mir.titulo1 + prof_largura or tirosx+tiros_width > mir.titulo1 and tirosx + tiros_width < mir.titulo1+prof_largura:
+                        mir.titulo2 = -1000
+                        mir.titulo1 = random.choice([210,375,540])
+            
+                if tirosy  < lor.titulo2 + prof_altura and tirosy + tiros_width >= lor.titulo2: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
+                    if tirosx > lor.titulo1 and tirosx < lor.titulo1 + prof_largura or tirosx+tiros_width > lor.titulo1 and tirosx + tiros_width < lor.titulo1+prof_largura:
+                        lor.titulo2 = -1000
+                        lor.titulo1 = random.choice([210,375,540])
+                    
+                if tirosy  < orf.titulo2 + prof_altura and tirosy + tiros_width >= orf.titulo2: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
+                    if tirosx > orf.titulo1 and tirosx < orf.titulo1 + prof_largura or tirosx+tiros_width > orf.titulo1 and tirosx + tiros_width < orf.titulo1+prof_largura:
+                        orf.titulo2 = -1000
+                        orf.titulo1 = random.choice([210,375,540])
+                    
+                if tirosy  < fred.titulo2 + prof_altura and tirosy + tiros_width >= fred.titulo2: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
+                    if tirosx > fred.titulo1 and tirosx < fred.titulo1 + prof_largura or tirosx+tiros_width > fred.titulo1 and tirosx + tiros_width < fred.titulo1+prof_largura:
+                        fred.titulo2 = -1000
+                        fred.titulo1 = random.choice([210,375,540])
+
+                if tirosy  < hel.titulo2 + prof_altura and tirosy + tiros_width >= hel.titulo2: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
+                    if tirosx > hel.titulo1 and tirosx < hel.titulo1 + prof_largura or tirosx+tiros_width > hel.titulo1 and tirosx + tiros_width < hel.titulo1+prof_largura:
+                        hel.titulo2 = -1000
+                        hel.titulo1 = random.choice([210,375,540])
 
 
         fundo(posição_inicial_fundo_x,posição_inicial_fundo_y)    
         posição_inicial_fundo_y += velocidade_fundo
+        
+
+        func_cubos(cubosx, cubosy)
+        cubosy += cubos_speed
 
 
-
-        desvio(Score)
+        desvio(Jogador.Score)
 
         if car_positionX > 637 - carX or car_positionX < 157:
             bater()
@@ -229,11 +312,23 @@ def loop_jogo():
         had.posper2(5000,10000)
         vin.posper2(2000,5000)
         hel.posper2(100,2500)
+
+        if car_positionY < cubosy + cubos_compr:
+            if car_positionX > cubosx and car_positionX < cubosx + cubos_larg or car_positionX+carX > cubosx and car_positionX + carX < cubosx + cubos_larg:
+            
+                cubosy = (altura_da_tela-3000)
+                cubosx = choice([270,360,540])
+                contador+=1
+                
+            else:
+                if cubosy > 800:
+                    cubosy = (altura_da_tela-3000)
+                    cubosx = choice([230,360,540])
         
             
         imagem_carro(car_positionX,car_positionY)
-        
-        lourenco1(lor.titulo1,lor.titulo2)
+        cubos_contador(contador)
+        lourenco1(lor .titulo1,lor.titulo2)
         miranda1(mir.titulo1,mir.titulo2)
         orfali1(orf.titulo1,orf.titulo2)
         fred1(fred.titulo1,fred.titulo2)
@@ -260,8 +355,13 @@ def loop_jogo():
         hel.crash()
 
         vin.crash2(1)
-        had.crash2(2)
+        #vin.titulo2 = -1500
+        #vin.titulo1 = random.choice([210,375,540])
 
+        
+        had.crash2(2)
+        #had.titulo2 = -1500
+        #had.titulo1 = random.choice([210,375,540])
 
         #pygame.mixer.Sound.stop(faustao)
         pygame.display.update()
