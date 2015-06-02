@@ -132,7 +132,7 @@ def loop_jogo():
 
     pygame.mixer.music.play()
         
-    velocidade_fundo = 5
+    velocidade_fundo = 30
     posição_inicial_fundo_y = -600
     posição_inicial_fundo_x = 0
 
@@ -152,7 +152,7 @@ def loop_jogo():
     
     tirosx = car_positionX
     tirosy = car_positionY
-    tiros_speed= 1
+    tiros_speed= 30
     tiros_change = 0
     tiros_width = 10
     tiros_compr = 100
@@ -327,25 +327,30 @@ def loop_jogo():
             
             if tecla.type == pygame.KEYDOWN:
                 if tecla.key == pygame.K_SPACE:
-                    pass
-                    tiros(tirosx,tirosy)
-                    
-                    
-
-            if tecla.type == pygame.KEYUP:
-                if tecla.key == pygame.K_SPACE:
                     tirosy = car_positionY
                     tirosx = car_positionX
                     tiros(tirosx,tirosy)
-                    tiros_speed = 150
+                    tirosy -= tiros_speed
                     
+                if tecla.key != pygame.K_SPACE:               
+                    tiros(tirosx,tirosy)
                     tirosy -= tiros_speed
                     
                     
-                    if tirosy<0:
-                        if contador>0:
-                            tirosy=car_positionY
-                            contador-=1
+            if tecla.type == pygame.KEYUP:
+                if tecla.key == pygame.K_SPACE:
+                    tirosx = car_positionX
+                    tiros(tirosx,tirosy)
+                    tirosy -= tiros_speed
+                if tecla.key != pygame.K_SPACE:               
+                    tiros(tirosx,tirosy)                 
+                    tirosy -= tiros_speed
+                    
+                    
+            if tirosy<0:
+                if contador>0:
+                    tirosy=car_positionY
+                    contador-=1
 
             if tirosy  < mir.titulo2 + prof_altura and tirosy + tiros_width >= mir.titulo2: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
                 if tirosx > mir.titulo1 and tirosx < mir.titulo1 + prof_largura or tirosx+tiros_width > mir.titulo1 and tirosx + tiros_width < mir.titulo1+prof_largura:

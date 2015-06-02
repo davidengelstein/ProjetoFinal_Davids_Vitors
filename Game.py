@@ -145,7 +145,7 @@ def loop_jogo():
 
     pygame.mixer.music.play()
         
-    velocidade_fundo = 5
+    velocidade_fundo = 10
 
     
 
