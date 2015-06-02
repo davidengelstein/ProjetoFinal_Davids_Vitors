@@ -47,9 +47,9 @@ heloisa = pygame.image.load('helo2.png')
 vinicius = pygame.image.load('vinicius1.png')
 bala = pygame.image.load("bala.png")
 cubo = pygame.image.load("ItemBox.png")
-mini = pygame.image.load('mini.png')
-mini2 = pygame.image.load('mini2.png')
-fundo = pygame.image.load('fundo1.png')
+#mini = pygame.image.load('mini.png')
+#mini2 = pygame.image.load('mini2.png')
+fundo = pygame.image.load('Fundo1.png')
 
 musica = pygame.mixer.music.load('uptown8bits.wav')
 #faustao = pygame.mixer.Sound('faustao.wav')
@@ -251,11 +251,18 @@ def loop_jogo():
                 if car_positionX > self.titulo1 and car_positionX < self.titulo1 + prof_largura or car_positionX + carX > self.titulo1 and car_positionX + carX < self.titulo1 + prof_largura:
                     bater()
 
+
+        
+                       
+
         def crash2 (self,value):
             if car_positionY < self.titulo2 + prof_altura and car_positionY + carY >= self.titulo2 + 60: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
                 if car_positionX > self.titulo1 and car_positionX < self.titulo1 + prof_largura or car_positionX + carX > self.titulo1 and car_positionX + carX < self.titulo1 + prof_largura:
                     
                     Jogador.Score += value
+                    self.titulo2 = -1500
+                    self.titulo1 = random.choice([210,375,540])
+
 
     lor = personagens('posição_lourençoX','posição_lourençoY')
     mir = personagens('posição_mirandaX','posição_mirandaY')
@@ -377,13 +384,10 @@ def loop_jogo():
         hel.crash()
 
         vin.crash2(1)
-        #vin.titulo2 = -1500
-        #vin.titulo1 = random.choice([210,375,540])
-
+        
         
         had.crash2(2)
-        #had.titulo2 = -1500
-        #had.titulo1 = random.choice([210,375,540])
+
 
         #pygame.mixer.Sound.stop(faustao)
 

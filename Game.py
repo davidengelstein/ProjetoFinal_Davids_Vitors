@@ -137,6 +137,7 @@ Não_Rodar_Jogo = False
 
 
 def loop_jogo():
+    
     Imagem_Fundo = pygame.image.load('fundo.png')   
     Imagem_Fundo = pygame.transform.scale(Imagem_Fundo,(largura_da_tela,1200))
     def fundo(x,y):
@@ -365,7 +366,7 @@ def loop_jogo():
         
         
       
-        if contador > 0:    
+        if Score > 0:    
             if tecla.type == pygame.QUIT:
                 pygame.quit()
                 quit()        
@@ -378,18 +379,18 @@ def loop_jogo():
                     pass
                     
                     #tiros(tirosx,tirosy)
-
+    
             if tecla.type == pygame.KEYUP:
                 if tecla.key == pygame.K_SPACE:
                     tirosx = car_positionX
                     tiros(tirosx,tirosy)
                     tiros_speed = 10
-
+    
                     tirosx = car_positionX
                     
                         
-#                    for i in range(1,600):
-#                        tiros_speed+=0.000002
+    #                    for i in range(1,600):
+    #                        tiros_speed+=0.000002
                 
                     tirosy -= tiros_speed
                 
