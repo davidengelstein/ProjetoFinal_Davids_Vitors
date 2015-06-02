@@ -1,3 +1,4 @@
+
 # -*- coding: utf-8 -*-
 """
 Created on Mon May 11 20:01:53 2015
@@ -19,14 +20,18 @@ white = (255,255,255)
 blue = (0,0,255)
 green = (0,255,0)
 red = (255,0,0)
-
 blackb = (200,200,200)
-
 yellow = (255,242,0)
+
 
 
 largura_da_tela = 800 #eixox
 altura_da_tela = 600
+
+
+smallfont = pygame.font.SysFont("comicsansms", 30)
+medfont = pygame.font.SysFont("comicsansms", 40)
+largefont = pygame.font.SysFont("comicsansms", 110)
 
 gameDisplay = pygame.display.set_mode((largura_da_tela,altura_da_tela))
 
@@ -41,7 +46,10 @@ haddad = pygame.image.load('had1.png')
 heloisa = pygame.image.load('helo2.png')
 vinicius = pygame.image.load('vinicius1.png')
 bala = pygame.image.load("bala.png")
-cubo = pygame.image.load("caixinha.png")
+cubo = pygame.image.load("ItemBox.png")
+mini = pygame.image.load('mini.png')
+mini2 = pygame.image.load('mini2.png')
+fundo = pygame.image.load('fundo1.png')
 
 musica = pygame.mixer.music.load('uptown8bits.wav')
 #faustao = pygame.mixer.Sound('faustao.wav')
@@ -49,13 +57,12 @@ musica = pygame.mixer.music.load('uptown8bits.wav')
 Imagem_Fundo = pygame.image.load('8bitsRoad.png')
 Imagem_Fundo = pygame.transform.scale(Imagem_Fundo,(largura_da_tela,1200))
 
-def tiros(tirosx,tirosy):
-    gameDisplay.blit(bala,(tirosx,tirosy))
+fundointro = pygame.transform.scale(fundo,(largura_da_tela,altura_da_tela))
 
 def cubos_contador(cont):
     font = pygame.font.SysFont(None, 40)
     text = font.render("tiros: "+str(cont), True, black)
-    gameDisplay.blit(text,(0,28))
+    DisplayDoJogo.blit(text,(0,28))
 
 def func_cubos(cubosx,cubosy):
     gameDisplay.blit(cubo,(cubosx,cubosy))
@@ -64,34 +71,93 @@ def desvio(contar):
     font = pygame.font.SysFont(None, 40)
     text = font.render("Score: " + str(contar),True,green)
     DisplayDoJogo.blit(text,(0,0))
-    
-def text_objects(text, font): #Não entendi muito bem essa função
-    textSurface = font.render(text, True, white)
-    return textSurface, textSurface.get_rect() 
 
-def mensagem(text):
-    largeText = pygame.font.Font('freesansbold.ttf',115)
-    TextSurf, TextRect = text_objects(text, largeText)
-    TextRect.center = ((largura_da_tela/2),(altura_da_tela/2))
-    gameDisplay.blit(TextSurf, TextRect)
+def text_objects(text,cor,size):
+    if size == 'small':
+        textSurface = smallfont.render(text,True,cor)
+    elif size == 'medium':
+        textSurface = medfont.render(text,True,cor)
+    elif size == 'large':
+        textSurface = largefont.render(text,True,cor)
+    return textSurface,textSurface.get_rect()
+
+
+
+def mensagem (msg,cor,size):
+    textSurf, textRect = text_objects(msg,cor,size)    
+    textRect.center = (largura_da_tela/2),(altura_da_tela/2)
+    DisplayDoJogo.blit(textSurf,textRect)
     pygame.display.update()
-    time.sleep(2)
-    loop_jogo()
+
+    
+def botao(x,y,w,h,ic,ac,acao=None):
+    mouse = pygame.mouse.get_pos()
+    click = pygame.mouse.get_pressed()
+    if x + w > mouse[0] > x and y + h > mouse[1] > y:
+        pygame.draw.rect(DisplayDoJogo, ac, (x,y,w,h))
+        if click[0] == 1 and acao != None:
+            if acao == 'play':
+                loop_jogo()
+            if acao == 'quit':
+                pygame.quit()
+                quit()
+            if acao == 'ranking':
+                pass
+    else:
+        pygame.draw.rect(DisplayDoJogo, ic,(x,y,w,h))
+
+       
+
+def intro():
+
+    intro = True
+
+    while intro:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+                
+            
+        DisplayDoJogo.blit(fundointro, (0,0))
+        #pygame.draw.rect(DisplayDoJogo,white,[0,230,100,200])
+
+                
+        botao(310,400,180,40,black,green,acao = 'play')
+        botao(310,520,180,40,black,red,acao = 'ranking')
+        botao(310,460,180,40,black,yellow,acao = 'quit')
+
+        font = pygame.font.SysFont(None, 40)
+        text = font.render('PLAY',True,white)
+        gameDisplay.blit(text,(363,410))
+        
+        font = pygame.font.SysFont(None, 40)
+        text = font.render('RANKING',True,white)
+        gameDisplay.blit(text,(333,470))
+        
+        font = pygame.font.SysFont(None, 40)
+        text = font.render('QUIT',True,white)
+        gameDisplay.blit(text,(363,530))
+        
+        pygame.display.update()
+
+#def car_select():
+    
+
 
 def bater():
     pygame.mixer.music.stop()
     #pygame.mixer.Sound.play(faustao)
-    mensagem('ERROOOOU!!!')
-    Score = 0
-
-
+    mensagem('ERROOOOU!!!',red,'large')
+    time.sleep(2)
+    loop_jogo()    
+    
 def moeda(x,y):
     DisplayDoJogo.blit(moedass,(x,y))
 
 def fundo(x,y):
     DisplayDoJogo.blit(Imagem_Fundo,(x,y))
-
-        
+     
 def imagem_carro(a,b):
     DisplayDoJogo.blit(imgcarro,(a,b))
     
@@ -115,7 +181,7 @@ def vinicius1(r,s):
     
 def heloisa1(r,s):
     DisplayDoJogo.blit(heloisa,(r,s))
-
+            
 DisplayDoJogo = pygame.display.set_mode((largura_da_tela,altura_da_tela))
     
 
@@ -124,8 +190,9 @@ Não_Rodar_Jogo = False
 
 
 def loop_jogo():
-    Imagem_Fundo = pygame.image.load('fundo.png')   
+    Imagem_Fundo = pygame.image.load('8bitsRoad.png')   
     Imagem_Fundo = pygame.transform.scale(Imagem_Fundo,(largura_da_tela,1200))
+    
     def fundo(x,y):
         DisplayDoJogo.blit(Imagem_Fundo,(x,y))
     
@@ -144,11 +211,11 @@ def loop_jogo():
     carX = 57
     carY = 106
 
-    cubosx = choice([275,330,525])
+    cubosx = choice([210,375,540])
     cubosy = 0
     cubos_speed = velocidade_fundo
-    cubos_compr=100
-    cubos_larg=120
+    cubos_compr=60
+    cubos_larg=66
     
     tirosx = car_positionX
     tirosy = car_positionY
@@ -320,114 +387,16 @@ def loop_jogo():
 
         #pygame.mixer.Sound.stop(faustao)
 
-        if contador > 0:
-            if tecla.type == pygame.QUIT:
-                pygame.quit()
-                quit()        
-            
-            if tecla.type == pygame.KEYDOWN:
-                if tecla.key == pygame.K_SPACE:
-                    pass
-                    tiros(tirosx,tirosy)
-                    
-                    
-
-            if tecla.type == pygame.KEYUP:
-                if tecla.key == pygame.K_SPACE:
-                    tirosy = car_positionY
-                    tirosx = car_positionX
-                    tiros(tirosx,tirosy)
-                    tiros_speed = 150
-                    
-                    tirosy -= tiros_speed
-                    
-                    
-                    if tirosy<0:
-                        if contador>0:
-                            tirosy=car_positionY
-                            contador-=1
-
-            if tirosy  < mir.titulo2 + prof_altura and tirosy + tiros_width >= mir.titulo2: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
-                if tirosx > mir.titulo1 and tirosx < mir.titulo1 + prof_largura or tirosx+tiros_width > mir.titulo1 and tirosx + tiros_width < mir.titulo1+prof_largura:
-                    mir.titulo2 = -1000
-                    mir.titulo1 = random.choice([210,375,540])
-            
-            if tirosy  < lor.titulo2 + prof_altura and tirosy + tiros_width >= lor.titulo2: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
-                if tirosx > lor.titulo1 and tirosx < lor.titulo1 + prof_largura or tirosx+tiros_width > lor.titulo1 and tirosx + tiros_width < lor.titulo1+prof_largura:
-                    lor.titulo2 = -1000
-                    lor.titulo1 = random.choice([210,375,540])
-                    
-            if tirosy  < orf.titulo2 + prof_altura and tirosy + tiros_width >= orf.titulo2: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
-                if tirosx > orf.titulo1 and tirosx < orf.titulo1 + prof_largura or tirosx+tiros_width > orf.titulo1 and tirosx + tiros_width < orf.titulo1+prof_largura:
-                    orf.titulo2 = -1000
-                    orf.titulo1 = random.choice([210,375,540])
-                    
-            if tirosy  < fred.titulo2 + prof_altura and tirosy + tiros_width >= fred.titulo2: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
-                if tirosx > fred.titulo1 and tirosx < fred.titulo1 + prof_largura or tirosx+tiros_width > fred.titulo1 and tirosx + tiros_width < fred.titulo1+prof_largura:
-                    fred.titulo2 = -1000
-                    fred.titulo1 = random.choice([210,375,540])
-
-            if tirosy  < hel.titulo2 + prof_altura and tirosy + tiros_width >= hel.titulo2: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
-                if tirosx > hel.titulo1 and tirosx < hel.titulo1 + prof_largura or tirosx+tiros_width > hel.titulo1 and tirosx + tiros_width < hel.titulo1+prof_largura:
-                    hel.titulo2 = -1000
-                    hel.titulo1 = random.choice([210,375,540])
+        
         pygame.display.update()
         framespersecond.tick(fps)
-def intinicial():
-    
-    interface = pygame.image.load('Fundo1.png')    
-    interface = pygame.transform.scale(interface,(largura_da_tela,altura_da_tela))
-    gameDisplay.blit(interface,(0,0))
-    
-                
-    def button(msg,msg1,msg2,x,y,w,h,ic,ac):
-        while True:
-            for event in pygame.event.get():
-                mouse = pygame.mouse.get_pos()
-                click = pygame.mouse.get_pressed()
-    #            print(mouse)
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    quit()
-                pygame.display.update()
-            
-            if x+w > mouse[0] > x and y + h > mouse[1] > y:   #310,400,180,40 (x,y,w,h)
-                pygame.draw.rect(gameDisplay, ac, (x,y,w,h))
-                if click[0] == 1:
-                    loop_jogo()
-                    
-            else:
-                pygame.draw.rect(gameDisplay, ic, (x,y,w,h))
-                
-            if x+w > mouse[0] > x and y+60+h > mouse[1] > y+60:
-                pygame.draw.rect(gameDisplay, ac, (x,y+60,w,h))
-            else:
-                pygame.draw.rect(gameDisplay, ic, (x,y+60,w,h))
-                
-            if x + w > mouse[0] > x and y+120+h > mouse[1] > y+120:
-                pygame.draw.rect(gameDisplay, ac, (x,y+120,w,h))
-                if click[0] == 1:
-                    pygame.quit()
-                    quit()
-                    
-            else:
-                pygame.draw.rect(gameDisplay, ic, (x,y+120,w,h))
-                
-                            
-            font = pygame.font.SysFont(None, 40)
-            text = font.render(msg,True,white)
-            gameDisplay.blit(text,(363,410))
-        
-            font = pygame.font.SysFont(None, 40)
-            text = font.render(msg1,True,white)
-            gameDisplay.blit(text,(333,470))
-        
-            font = pygame.font.SysFont(None, 40)
-            text = font.render(msg2,True,white)
-            gameDisplay.blit(text,(363,530))
-                        
-    button('PLAY','RANKING','QUIT',310,400,180,40,black,blackb)                        
-intinicial()
+
+
+
+
+
+
+intro()
 loop_jogo()
 pygame.quit()
 quit()
