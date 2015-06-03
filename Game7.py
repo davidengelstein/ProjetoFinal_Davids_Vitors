@@ -42,7 +42,7 @@ lourenco = pygame.image.load('lor.png')
 miranda = pygame.image.load('mir.png')
 orfali = pygame.image.load('orf.png')
 fred5 = pygame.image.load('fred1.png')
-haddad = pygame.image.load('had1.png')
+haddad = pygame.image.load('had.png')
 heloisa = pygame.image.load('helo2.png')
 vinicius = pygame.image.load('vinicius1.png')
 bala = pygame.image.load("bala.png")
@@ -152,8 +152,7 @@ def bater():
     time.sleep(2)
     loop_jogo()    
     
-def moeda(x,y):
-    DisplayDoJogo.blit(moedass,(x,y))
+
 
 def fundo(x,y):
     DisplayDoJogo.blit(Imagem_Fundo,(x,y))
@@ -199,7 +198,7 @@ def loop_jogo():
 
     pygame.mixer.music.play()
         
-    velocidade_fundo = 30
+    velocidade_fundo = 10
     posição_inicial_fundo_y = -600
     posição_inicial_fundo_x = 0
 
