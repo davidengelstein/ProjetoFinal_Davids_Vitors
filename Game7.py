@@ -42,14 +42,16 @@ lourenco = pygame.image.load('lor.png')
 miranda = pygame.image.load('mir.png')
 orfali = pygame.image.load('orf.png')
 fred5 = pygame.image.load('fred1.png')
-haddad = pygame.image.load('had1.png')
+haddad = pygame.image.load('had.png')
 heloisa = pygame.image.load('helo2.png')
 vinicius = pygame.image.load('vinicius1.png')
 bala = pygame.image.load("bala.png")
 cubo = pygame.image.load("ItemBox.png")
 #mini = pygame.image.load('mini.png')
 #mini2 = pygame.image.load('mini2.png')
-fundo = pygame.image.load('fundo1.png')
+#
+#fundo = pygame.image.load('fundo1.png')
+fundo = pygame.image.load('Fundo1.png')
 
 musica = pygame.mixer.music.load('uptown8bits.wav')
 #faustao = pygame.mixer.Sound('faustao.wav')
@@ -64,8 +66,8 @@ def cubos_contador(cont):
     text = font.render("tiros: "+str(cont), True, black)
     DisplayDoJogo.blit(text,(0,28))
 
-def func_cubos(cubosx,cubosy):
-    gameDisplay.blit(cubo,(cubosx,cubosy))
+def func_cubos(cubos_x,cubos_y):
+    gameDisplay.blit(cubo,(cubos_x,cubos_y))
 
 def desvio(contar):
     font = pygame.font.SysFont(None, 40)
@@ -80,8 +82,6 @@ def text_objects(text,cor,size):
     elif size == 'large':
         textSurface = largefont.render(text,True,cor)
     return textSurface,textSurface.get_rect()
-
-
 
 def mensagem (msg,cor,size):
     textSurf, textRect = text_objects(msg,cor,size)    
@@ -182,21 +182,21 @@ def vinicius1(r,s):
 def heloisa1(r,s):
     DisplayDoJogo.blit(heloisa,(r,s))
 
-def shot(speed):
-    qtde_tiros = contador
+#def shot(speed):
+#    qtde_tiros = contador
     
-    tirosx = car_positionX
+#    tirosx = car_positionX
     
-    tirosy = car_positionY + speed
+#    tirosy = car_positionY + speed
 
-    tiros_width = 10
+ #   tiros_width = 10
     
-    while qtde_tiros > 0:
+  #  while qtde_tiros > 0:
         
-        if tirosy  < self.titulo2 + prof_altura and tirosy + tiros_width >= self.titulo2: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
-            if tirosx > self.titulo1 and tirosx < self.titulo1 + prof_largura or tirosx+tiros_width > self.titulo1 and tirosx + tiros_width < self.titulo1+prof_largura:
-                self.titulo2 = -1000
-                self.titulo1 = random.choice([210,375,540])
+   #     if tirosy  < self.titulo2 + prof_altura and tirosy + tiros_width >= self.titulo2: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
+     #       if tirosx > self.titulo1 and tirosx < self.titulo1 + prof_largura or tirosx+tiros_width > self.titulo1 and tirosx + tiros_width < self.titulo1+prof_largura:
+    #            self.titulo2 = -1000
+      #          self.titulo1 = random.choice([210,375,540])
 
 
             
@@ -234,8 +234,16 @@ def loop_jogo():
     cubos_speed = velocidade_fundo
     cubos_compr=60
     cubos_larg=66
-    
 
+
+    tirosx = car_positionX
+    tirosy = car_positionY
+    tiros_speed= 30
+    tiros_change = 0
+    tiros_width = 10
+    tiros_compr = 100
+    
+    ranking = {}
 
     contador = 0
     
@@ -270,6 +278,9 @@ def loop_jogo():
                     self.titulo2 = -1500
                     self.titulo1 = random.choice([210,375,540])   
                     Jogador.Score += value
+                    self.titulo2 = -1500
+                    self.titulo1 = random.choice([210,375,540])
+
 
     lor = personagens('posição_lourençoX','posição_lourençoY')
     mir = personagens('posição_mirandaX','posição_mirandaY')
@@ -290,21 +301,6 @@ def loop_jogo():
     Não_Rodar_Jogo = False
 
     while not Não_Rodar_Jogo:
-        
-        func_cubos(cubosx, cubosy)
-        cubosy += cubos_speed
-
-        if car_positionY < cubosy + cubos_compr:
-            if car_positionX > cubosx and car_positionX < cubosx + cubos_larg or car_positionX+carX > cubosx and car_positionX + carX < cubosx + cubos_larg:
-            
-                cubosy = (altura_da_tela-3000)
-                cubosx = choice([270,360,540])
-                contador+=1
-                
-            else:
-                if cubosy > 800:
-                    cubosy = (altura_da_tela-3000)
-                    cubosx = choice([230,360,540])
 
 
         for tecla in pygame.event.get():
@@ -330,8 +326,10 @@ def loop_jogo():
                 elif car_positionX == 540 and tecla.key == pygame.K_LEFT:
                     car_positionX = 375
 
-                elif tecla.key == pygame.K_SPACE:
-                    shot(10)
+                #elif tecla.key == pygame.K_SPACE:
+                    #shot(10)
+        func_cubos(cubosx, cubosy)
+        cubosy += cubos_speed
 
 
         fundo(posição_inicial_fundo_x,posição_inicial_fundo_y)    
@@ -389,13 +387,27 @@ def loop_jogo():
         hel.crash()
 
         vin.crash2(10)
-
         
         had.crash2(20)
 
+        vin.crash2(1)
+        
+        had.crash2(2)
+
+        if car_positionY < cubosy + cubos_compr:
+            if car_positionX > cubosx and car_positionX < cubosx + cubos_larg or car_positionX+carX > cubosx and car_positionX + carX < cubosx + cubos_larg:
+            
+                cubosy = (altura_da_tela-3000)
+                cubosx = choice([270,360,540])
+                contador+=1
+                
+        else:
+            if  cubosy > 800:
+                cubosy = (altura_da_tela-3000)
+                cubosx = choice([230,360,540])
+
         #pygame.mixer.Sound.stop(faustao)
 
-        
         pygame.display.update()
         framespersecond.tick(fps)
 
