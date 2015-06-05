@@ -59,6 +59,11 @@ Imagem_Fundo = pygame.transform.scale(Imagem_Fundo,(largura_da_tela,1200))
 
 fundointro = pygame.transform.scale(fundo,(largura_da_tela,altura_da_tela))
 
+def record(cont):
+    font = pygame.font.SysFont(None, 40)
+    text = font.render("Recorde: "+str(cont), True, black)
+    DisplayDoJogo.blit(text,(600,28))
+
 def cubos_contador(cont):
     font = pygame.font.SysFont(None, 40)
     text = font.render("tiros: "+str(cont), True, black)
