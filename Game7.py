@@ -9,6 +9,22 @@ import pygame
 import random
 import time
 from random import choice
+from firebase import firebase
+
+
+FIREBASE_URL = "https://car-game.firebaseio.com/"
+
+if __name__ == '__main__':
+    # Cria uma referência para a aplicação Firebase
+    fb = firebase.FirebaseApplication(FIREBASE_URL, None)
+
+    # Lê o dado da base de dados
+    result = fb.get('/', "Produtos")
+
+
+produto = [result]
+
+nome = input("Digite seu nome:")
 
 pygame.init()
 pygame.display.set_caption('Teachers Game Race') #Nome do jogo a ser decidido
@@ -59,11 +75,6 @@ Imagem_Fundo = pygame.transform.scale(Imagem_Fundo,(largura_da_tela,1200))
 
 fundointro = pygame.transform.scale(fundo,(largura_da_tela,altura_da_tela))
 
-def record(cont):
-    font = pygame.font.SysFont(None, 40)
-    text = font.render("Recorde: "+str(cont), True, black)
-    DisplayDoJogo.blit(text,(600,28))
-
 def cubos_contador(cont):
     font = pygame.font.SysFont(None, 40)
     text = font.render("tiros: "+str(cont), True, black)
@@ -110,8 +121,7 @@ def botao(x,y,w,h,ic,ac,acao=None):
                 pass
     else:
         pygame.draw.rect(DisplayDoJogo, ic,(x,y,w,h))
-
-       
+        
 
 def intro():
 
@@ -150,14 +160,29 @@ def intro():
     
 
 
-def bater():
+def bater(Jogador):
+
+    print(Jogador.Score)
     pygame.mixer.music.stop()
     #pygame.mixer.Sound.play(faustao)
     mensagem('ERROOOOU!!!',red,'large')
+    Ranking(Jogador.Score)
     time.sleep(2)
     loop_jogo()    
     
-
+def Ranking(Score):
+    ranking = {}
+    ranking[nome] = Score
+    
+    produto.append(ranking)
+    # Troque esta URL pela de seu próprio App Firebase
+    FIREBASE_URL = "https://car-game.firebaseio.com/"
+    # Main
+    if __name__ == '__main__':
+        fb = firebase.FirebaseApplication(FIREBASE_URL, None)
+        # Escreve dados no Firebase
+        fb.put('/', "Produtos", produto)
+       
 
 def fundo(x,y):
     DisplayDoJogo.blit(Imagem_Fundo,(x,y))
@@ -230,6 +255,7 @@ def loop_jogo():
 
     contador = 0
     
+    
     class Jogador:
         Score = 0
     
@@ -253,7 +279,7 @@ def loop_jogo():
         def crash(self):
             if car_positionY < self.titulo2 + prof_altura and car_positionY + carY >= self.titulo2 + 60: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
                 if car_positionX > self.titulo1 and car_positionX < self.titulo1 + prof_largura or car_positionX + carX > self.titulo1 and car_positionX + carX < self.titulo1 + prof_largura:
-                    bater()
+                    bater(Jogador)
 
 
         
@@ -330,10 +356,10 @@ def loop_jogo():
         desvio(Jogador.Score)
 
         if car_positionX > 637 - carX or car_positionX < 157:
-            bater()
+            bater(Jogador)
                             
         if car_positionY > altura_da_tela - carY or car_positionY < 0:
-            bater()
+            bater(Jogador)
                 
         if posição_inicial_fundo_y == 0:
             posição_inicial_fundo_y = -600
