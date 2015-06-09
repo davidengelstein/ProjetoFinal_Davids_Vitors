@@ -19,7 +19,7 @@ if __name__ == '__main__':
     fb = firebase.FirebaseApplication(FIREBASE_URL, None)
 
     # Lê o dado da base de dados
-    result = fb.get('/', "scores")
+    result = fb.get('/', "Scores")
 
 
 produto = result
@@ -181,7 +181,7 @@ def Ranking(Score):
     if __name__ == '__main__':
         fb = firebase.FirebaseApplication(FIREBASE_URL, None)
         # Escreve dados no Firebase
-        fb.put('/', "Produtos", produto)
+        fb.put('/', "Scores", produto)
        
 
 def fundo(x,y):

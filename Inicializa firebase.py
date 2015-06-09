@@ -18,4 +18,4 @@ if __name__ == '__main__':
     fb = firebase.FirebaseApplication(FIREBASE_URL, None)
 
     # Lê o dado da base de dados
-    result = fb.put('/', "scores", [""])
+    result = fb.put('/', "Scores", [""])
