@@ -19,10 +19,10 @@ if __name__ == '__main__':
     fb = firebase.FirebaseApplication(FIREBASE_URL, None)
 
     # Lê o dado da base de dados
-    result = fb.get('/', "Produtos")
+    result = fb.get('/', "scores")
 
 
-produto = [result]
+produto = result
 
 nome = input("Digite seu nome:")
 
