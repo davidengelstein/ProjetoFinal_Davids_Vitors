@@ -248,12 +248,10 @@ def loop_jogo():
     
     tirosx = car_positionX
     tirosy = car_positionY
-    tiros_speed= 30
-    tiros_change = 0
-    tiros_width = 10
-    tiros_compr = 100
+
 
     contador = 0
+    lista_tiros = []
     
     
     class Jogador:
@@ -290,6 +288,40 @@ def loop_jogo():
                     self.titulo2 = -1500
                     self.titulo1 = random.choice([210,375,540])
 
+    class tiros:
+        altura = 40
+        largura = 10
+        def __init__(self,imagem, display, posX,posY, vX = 0, vY = 0):
+            self.imagem = imagem
+            self.posX = posX
+            self.posY = posY
+            self.vX = vX
+            self.vY = vY
+            self.display = display
+            
+        def desenhar(self):
+            self.display.blit(self.imagem, (self.posX, self.posY))
+            
+        def atualizar(self):
+            self.posX += self.vX
+            self.posY -= self.vY
+            
+        def add_obstaculos(self, obst):
+            self.obstaculos = obst
+            
+        def add_lista(self, lista_tiros):
+            self.lista_tiros = lista_tiros
+
+        def crash3(self):
+            for p in obstaculos:
+                if self.posY < p.titulo2 + prof_altura and self.posY + tiros.altura >= p.titulo2: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
+                    if self.posX > p.titulo1 and self.posX < p.titulo1 + prof_largura or self.posX + tiros.largura > p.titulo1 and self.posX + tiros.largura < p.titulo1 + prof_largura:
+                        
+                        p.titulo2 = -1500
+                        p.titulo1 = random.choice([210,375,540])
+                        lista_tiros.remove(self)
+                        
+                
 
     lor = personagens('posição_lourençoX','posição_lourençoY')
     mir = personagens('posição_mirandaX','posição_mirandaY')
@@ -298,6 +330,8 @@ def loop_jogo():
     had = personagens('posição_haddadX','posição_haddadY')
     vin = personagens('posição_viniciusX','posição_viniciusY')
     hel = personagens('posição_heloisaX','posição_heloisaY')
+    
+    obstaculos = [lor, mir, orf, fred, hel]
 
     lor.posiniper(-2000,0)
     mir.posiniper(-3000,0)
@@ -311,6 +345,7 @@ def loop_jogo():
 
     while not Não_Rodar_Jogo:
         
+        
         for tecla in pygame.event.get():
             
             if tecla.type == pygame.QUIT:
@@ -321,23 +356,26 @@ def loop_jogo():
                 
                 if car_positionX == 375 and tecla.key == pygame.K_LEFT:
                     car_positionX = 210
-                    if tirosy == car_positionY:                    
-                        tirosx = 210
+                    
                     
                 elif car_positionX == 210 and tecla.key == pygame.K_RIGHT:
                     car_positionX = 375
-                    if tirosy == car_positionY:
-                        tirosx = 375
+                    
                     
                 elif car_positionX == 375 and tecla.key == pygame.K_RIGHT:
                     car_positionX = 540
-                    if tirosy == car_positionY:
-                        tirosx = 540
+                    
                     
                 elif car_positionX == 540 and tecla.key == pygame.K_LEFT:
                     car_positionX = 375
-                    if tirosy == car_positionY:
-                        tirosx = 375
+                    
+                
+                if tecla.key == pygame.K_SPACE:
+                    t = tiros(bala, DisplayDoJogo, car_positionX, car_positionY, 0, 10)
+                    t.add_obstaculos(obstaculos)
+                    lista_tiros.append(t)
+                    t.add_lista(lista_tiros)
+                    
 
                 
 
@@ -375,6 +413,7 @@ def loop_jogo():
                 cubosy = (altura_da_tela-3000)
                 cubosx = choice([270,360,540])
                 contador+=1
+                lista_tiros
                 
             else:
                 if cubosy > 800:
@@ -419,7 +458,11 @@ def loop_jogo():
         #pygame.mixer.Sound.stop(faustao)
 
 
-        
+        for t in lista_tiros:
+            t.atualizar()
+            t.desenhar()
+            t.crash3()
+
 
         pygame.display.update()
         framespersecond.tick(fps)
