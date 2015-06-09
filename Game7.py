@@ -371,11 +371,13 @@ def loop_jogo():
                     
                 
                 if tecla.key == pygame.K_SPACE:
-                    t = tiros(bala, DisplayDoJogo, car_positionX, car_positionY, 0, 10)
-                    t.add_obstaculos(obstaculos)
-                    lista_tiros.append(t)
-                    t.add_lista(lista_tiros)
-                    
+                    if contador > 0:
+                        t = tiros(bala, DisplayDoJogo, car_positionX, car_positionY, 0, 10)
+                        t.add_obstaculos(obstaculos)
+                        lista_tiros.append(t)
+                        t.add_lista(lista_tiros)
+                        contador -= 1
+                                        
 
                 
 
@@ -411,9 +413,9 @@ def loop_jogo():
             if car_positionX > cubosx and car_positionX < cubosx + cubos_larg or car_positionX+carX > cubosx and car_positionX + carX < cubosx + cubos_larg:
             
                 cubosy = (altura_da_tela-3000)
-                cubosx = choice([270,360,540])
+                cubosx = choice([230,360,540])
                 contador+=1
-                lista_tiros
+                
                 
             else:
                 if cubosy > 800:
