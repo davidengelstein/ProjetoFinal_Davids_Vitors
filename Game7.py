@@ -68,7 +68,7 @@ cubo = pygame.image.load("ItemBox.png")
 fundo = pygame.image.load('Fundo1.png')
 
 musica = pygame.mixer.music.load('uptown8bits.wav')
-#faustao = pygame.mixer.Sound('faustao.wav')
+faustao = pygame.mixer.Sound('18268__zippi1__sound-hahaha1.wav')
 
 Imagem_Fundo = pygame.image.load('8bitsRoad.png')
 Imagem_Fundo = pygame.transform.scale(Imagem_Fundo,(largura_da_tela,1200))
@@ -161,7 +161,7 @@ def bater(Jogador):
 
     print(Jogador.Score)
     pygame.mixer.music.stop()
-    #pygame.mixer.Sound.play(faustao)
+    pygame.mixer.Sound.play(faustao)
     mensagem('ERROOOOU!!!',red,'large')
     Ranking(Jogador.Score)
     #ordena_ranking(produto)
