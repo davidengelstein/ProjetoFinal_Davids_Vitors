@@ -120,12 +120,6 @@ def botao(x,y,w,h,ic,ac,acao=None):
                 quit()
             if acao == 'ranking':
                 ordena_ranking(produto)
-<<<<<<< HEAD
-
-
-
-=======
->>>>>>> origin/master
     else:
         pygame.draw.rect(DisplayDoJogo, ic,(x,y,w,h))
         
@@ -166,16 +160,12 @@ def intro():
 
 def bater(Jogador):
 
-    #print(Jogador.Score)
+    print(Jogador.Score)
     pygame.mixer.music.stop()
     pygame.mixer.Sound.play(faustao)
     mensagem('ERROOOOU!!!',red,'large')
     Ranking(Jogador.Score)
-<<<<<<< HEAD
-    #print(produto)
-=======
     #ordena_ranking(produto)
->>>>>>> origin/master
     time.sleep(2)
     #loop_jogo() 
     intro()   
@@ -191,12 +181,8 @@ def Ranking(Score):
         fb = firebase.FirebaseApplication(FIREBASE_URL, None)
         # Escreve dados no Firebase
         fb.put('/', "Scores", produto)
-<<<<<<< HEAD
-        
-=======
 
 
->>>>>>> origin/master
 def ordena_ranking(produto):     
     def ordena(dici):
         if dici == None:
@@ -260,6 +246,7 @@ def loop_jogo():
     velocidade_fundo = 10
     posição_inicial_fundo_y = -600
     posição_inicial_fundo_x = 0
+    atualiza_5 = False
 
     prof_largura = 60
     prof_altura = 60
@@ -281,6 +268,10 @@ def loop_jogo():
 
     contador = 0
     lista_tiros = []
+
+    etapas = {}
+    etapas[5] = [1,False]
+    #etapas[10] = [1,False]
     
     
     class Jogador:
@@ -296,10 +287,12 @@ def loop_jogo():
             self.titulo1 = random.choice([210,375,540])
             self.titulo2 = random.randrange(random1,random2)
 
+
         def posper2(self,random3,random4):
             if self.titulo2 > altura_da_tela:
                 self.titulo2 = 0 - random.randrange(random3,random4)
                 self.titulo1 = random.choice([210,375,540])
+
                 
                 Jogador.Score += 1
             
@@ -363,6 +356,7 @@ def loop_jogo():
     
     obstaculos = [lor, mir, orf, fred, hel]
 
+
     lor.posiniper(-2000,0)
     mir.posiniper(-3000,0)
     orf.posiniper(-2000,0)
@@ -371,6 +365,8 @@ def loop_jogo():
     vin.posiniper(-5000,0)
     hel.posiniper(-2500,0)
     
+
+    print(velocidade_fundo)
     Não_Rodar_Jogo = False
 
     while not Não_Rodar_Jogo:
@@ -407,20 +403,50 @@ def loop_jogo():
                         lista_tiros.append(t)
                         t.add_lista(lista_tiros)
                         contador -= 1
-                                        
 
-                
-
-
-        fundo(posição_inicial_fundo_x,posição_inicial_fundo_y)    
-        posição_inicial_fundo_y += velocidade_fundo
-        
-
+        fundo(posição_inicial_fundo_x,posição_inicial_fundo_y)
+        imagem_carro(car_positionX,car_positionY)
+        cubos_contador(contador)       
         func_cubos(cubosx, cubosy)
-        cubosy += cubos_speed
 
+        lourenco1(lor .titulo1,lor.titulo2)
+        miranda1(mir.titulo1,mir.titulo2)
+        orfali1(orf.titulo1,orf.titulo2)
+        fred1(fred.titulo1,fred.titulo2)
+        haddad1(had.titulo1,had.titulo2)
+        vinicius1(vin.titulo1,vin.titulo2)
+        heloisa1(hel.titulo1,hel.titulo2)
+
+        lor.posper2(1000,5000)
+        mir.posper2(1000,5000)
+        orf.posper2(1000,5000)
+        fred.posper2(1000,5000)
+        had.posper2(10000,20000)
+        vin.posper2(10000,20000)
+        hel.posper2(1000,5000)
+
+        lor.crash()
+        mir.crash()
+        orf.crash()
+        fred.crash()
+        hel.crash()
+
+        vin.crash2(10)
+        had.crash2(20)
 
         desvio(Jogador.Score)
+
+        posição_inicial_fundo_y += velocidade_fundo
+
+        cubosy += cubos_speed
+                
+        lor.titulo2 += velocidade_fundo        
+        mir.titulo2 += velocidade_fundo
+        orf.titulo2 += velocidade_fundo
+        fred.titulo2 += velocidade_fundo           
+        had.titulo2 += velocidade_fundo   
+        vin.titulo2 += velocidade_fundo
+        hel.titulo2 += velocidade_fundo
 
         if car_positionX > 637 - carX or car_positionX < 157:
             bater(Jogador)
@@ -431,13 +457,6 @@ def loop_jogo():
         if posição_inicial_fundo_y == 0:
             posição_inicial_fundo_y = -600
 
-        lor.posper2(3500,4000)
-        mir.posper2(100,3000)
-        orf.posper2(6000,7000)
-        fred.posper2(100,2500)
-        had.posper2(5000,10000)
-        vin.posper2(2000,5000)
-        hel.posper2(100,2500)
 
         if car_positionY < cubosy + cubos_compr:
             if car_positionX > cubosx and car_positionX < cubosx + cubos_larg or car_positionX+carX > cubosx and car_positionX + carX < cubosx + cubos_larg:
@@ -451,50 +470,21 @@ def loop_jogo():
                 if cubosy > 800:
                     cubosy = (altura_da_tela-3000)
                     cubosx = choice([230,360,540])
-        
-            
-        imagem_carro(car_positionX,car_positionY)
-        cubos_contador(contador)
-        lourenco1(lor .titulo1,lor.titulo2)
-        miranda1(mir.titulo1,mir.titulo2)
-        orfali1(orf.titulo1,orf.titulo2)
-        fred1(fred.titulo1,fred.titulo2)
-        haddad1(had.titulo1,had.titulo2)
-        vinicius1(vin.titulo1,vin.titulo2)
-        heloisa1(hel.titulo1,hel.titulo2)
-        
-        
-        lor.titulo2 += velocidade_fundo        
-        mir.titulo2 += velocidade_fundo
-        orf.titulo2 += velocidade_fundo
-        fred.titulo2 += velocidade_fundo           
-        had.titulo2 += velocidade_fundo   
-        vin.titulo2 += velocidade_fundo
-        hel.titulo2 += velocidade_fundo
-        
-
-        imagem_carro(car_positionX,car_positionY)
-
-        lor.crash()
-        mir.crash()
-        orf.crash()
-        fred.crash()
-        hel.crash()
-
-        vin.crash2(1)
-        
-        
-        had.crash2(2)
-
-
-        #pygame.mixer.Sound.stop(faustao)
-
 
         for t in lista_tiros:
             t.atualizar()
             t.desenhar()
             t.crash3()
 
+
+        #if Jogador.Score in etapas:
+            #if etapas[Jogador.Score][1] == False:
+                #velocidade_fundo += etapas[Jogador.Score][0]
+                #etapas[Jogador.Score][1] = True
+                #print('Score: %d  Velocidade: %d '%(Jogador.Score, velocidade_fundo))
+
+        
+        #pygame.mixer.Sound.stop(faustao)
 
         pygame.display.update()
         framespersecond.tick(fps)
