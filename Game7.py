@@ -120,12 +120,8 @@ def botao(x,y,w,h,ic,ac,acao=None):
                 quit()
             if acao == 'ranking':
                 ordena_ranking(produto)
-<<<<<<< HEAD
+                
 
-
-
-=======
->>>>>>> origin/master
     else:
         pygame.draw.rect(DisplayDoJogo, ic,(x,y,w,h))
         
@@ -171,11 +167,8 @@ def bater(Jogador):
     pygame.mixer.Sound.play(faustao)
     mensagem('ERROOOOU!!!',red,'large')
     Ranking(Jogador.Score)
-<<<<<<< HEAD
     #print(produto)
-=======
     #ordena_ranking(produto)
->>>>>>> origin/master
     time.sleep(2)
     #loop_jogo() 
     intro()   
@@ -191,12 +184,8 @@ def Ranking(Score):
         fb = firebase.FirebaseApplication(FIREBASE_URL, None)
         # Escreve dados no Firebase
         fb.put('/', "Scores", produto)
-<<<<<<< HEAD
-        
-=======
 
 
->>>>>>> origin/master
 def ordena_ranking(produto):     
     def ordena(dici):
         if dici == None:
@@ -209,6 +198,7 @@ def ordena_ranking(produto):
             return 0
         for i,j in cada.items():
             print(i, " : ", j)
+
        
 
 def fundo(x,y):
