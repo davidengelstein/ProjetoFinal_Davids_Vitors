@@ -156,9 +156,6 @@ def intro():
         
         pygame.display.update()
 
-#def car_select():
-    
-
 
 def bater(Jogador):
 
@@ -169,7 +166,8 @@ def bater(Jogador):
     Ranking(Jogador.Score)
     print(produto)
     time.sleep(2)
-    loop_jogo()    
+    #loop_jogo() 
+    intro()   
     
 def Ranking(Score):
     ranking = {}
@@ -278,6 +276,7 @@ def loop_jogo():
             if car_positionY < self.titulo2 + prof_altura and car_positionY + carY >= self.titulo2 + 60: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
                 if car_positionX > self.titulo1 and car_positionX < self.titulo1 + prof_largura or car_positionX + carX > self.titulo1 and car_positionX + carX < self.titulo1 + prof_largura:
                     bater(Jogador)
+                    
                        
 
         def crash2 (self,value):
@@ -468,10 +467,6 @@ def loop_jogo():
 
         pygame.display.update()
         framespersecond.tick(fps)
-
-
-
-
 
 
 intro()
