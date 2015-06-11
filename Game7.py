@@ -116,7 +116,7 @@ def botao(x,y,w,h,ic,ac,acao=None):
                 pygame.quit()
                 quit()
             if acao == 'ranking':
-                pass
+                ordena_ranking(produto)
 
                 
 
