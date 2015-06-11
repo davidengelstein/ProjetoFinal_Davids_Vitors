@@ -21,6 +21,7 @@ if __name__ == '__main__':
     result = fb.get('/', "Scores")
 
 
+escolha_Carro = 1 # 1  for Ferrari 2 for Mini
 
 produto = result
 
@@ -53,7 +54,11 @@ gameDisplay = pygame.display.set_mode((largura_da_tela,altura_da_tela))
 
 fps = 1000
 
-imgcarro = pygame.image.load('car8bits2.png')
+
+
+img_mini = pygame.image.load('car8bits2.png')
+img_ferrari = pygame.image.load('ferraricar.png')
+imgcarro = img_mini
 lourenco = pygame.image.load('lor.png')
 miranda = pygame.image.load('mir.png')
 orfali = pygame.image.load('orf.png')
@@ -114,14 +119,14 @@ def botao(x,y,w,h,ic,ac,acao=None):
         pygame.draw.rect(DisplayDoJogo, ac, (x,y,w,h))
         if click[0] == 1 and acao != None:
             if acao == 'play':
-                loop_jogo()
+                car_select()
             if acao == 'quit':
                 pygame.quit()
                 quit()
             if acao == 'ranking':
                 ordena_ranking(produto)
             if acao == 'sim':
-                loop_jogo()
+                car_select()
             if acao == 'nao':
                 pygame.quit()
                 quit()
@@ -207,9 +212,9 @@ def bater(Jogador):
     time.sleep(2)
     #loop_jogo() 
     restart()
-
+    
 class car_botao():
-
+    carro = 'mini'
     def __init__(self,img,img2,x,y,w,h,acao=None):
         self.img = img
         self.img2 = img2
@@ -226,10 +231,11 @@ class car_botao():
             gameDisplay.blit(self.img2,(self.x,self.y))
             if click[0] == 1:
                 if self.x == 33 and self.y == 185:
-                    self.acao = 'mini'
+                    car_botao.carro = 'mini'
                     loop_jogo()
+                    
                 if self.x == 417 and self.y == 185:
-                    self.acao = 'ferrari'
+                    car_botao.carro = 'ferrari'
                     loop_jogo()
         else:
             gameDisplay.blit(self.img,(self.x,self.y))
@@ -288,7 +294,7 @@ def fundo(x,y):
     DisplayDoJogo.blit(Imagem_Fundo,(x,y))
      
 def imagem_carro(a,b):
-    DisplayDoJogo.blit(imgcarro,(a,b))    
+    DisplayDoJogo.blit(imgcarro,(a,b))
     
 def lourenco1(r,s):
     DisplayDoJogo.blit(lourenco,(r,s))
@@ -310,6 +316,7 @@ def vinicius1(r,s):
     
 def heloisa1(r,s):
     DisplayDoJogo.blit(heloisa,(r,s))
+
             
 DisplayDoJogo = pygame.display.set_mode((largura_da_tela,altura_da_tela))
     
@@ -324,7 +331,14 @@ def loop_jogo():
     
     def fundo(x,y):
         DisplayDoJogo.blit(Imagem_Fundo,(x,y))
+
+
+    global imgcarro
     
+    if car_botao.carro == 'ferrari':
+        imgcarro = img_mini
+    else:
+        imgcarro = img_ferrari
  
     pygame.mixer.music.play()
     
