@@ -67,8 +67,9 @@ cubo = pygame.image.load("ItemBox.png")
 #mini2 = pygame.image.load('mini2.png')
 fundo = pygame.image.load('Fundo1.png')
 
+car_start = pygame.mixer.Sound("car.wav")
 musica = pygame.mixer.music.load('uptown8bits.wav')
-#faustao = pygame.mixer.Sound('faustao.wav')
+faustao = pygame.mixer.Sound('18268__zippi1__sound-hahaha1.wav')
 
 Imagem_Fundo = pygame.image.load('8bitsRoad.png')
 Imagem_Fundo = pygame.transform.scale(Imagem_Fundo,(largura_da_tela,1200))
@@ -119,9 +120,12 @@ def botao(x,y,w,h,ic,ac,acao=None):
                 quit()
             if acao == 'ranking':
                 ordena_ranking(produto)
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> origin/master
     else:
         pygame.draw.rect(DisplayDoJogo, ic,(x,y,w,h))
         
@@ -164,10 +168,14 @@ def bater(Jogador):
 
     #print(Jogador.Score)
     pygame.mixer.music.stop()
-    #pygame.mixer.Sound.play(faustao)
+    pygame.mixer.Sound.play(faustao)
     mensagem('ERROOOOU!!!',red,'large')
     Ranking(Jogador.Score)
+<<<<<<< HEAD
     #print(produto)
+=======
+    #ordena_ranking(produto)
+>>>>>>> origin/master
     time.sleep(2)
     #loop_jogo() 
     intro()   
@@ -183,7 +191,12 @@ def Ranking(Score):
         fb = firebase.FirebaseApplication(FIREBASE_URL, None)
         # Escreve dados no Firebase
         fb.put('/', "Scores", produto)
+<<<<<<< HEAD
         
+=======
+
+
+>>>>>>> origin/master
 def ordena_ranking(produto):     
     def ordena(dici):
         if dici == None:
@@ -240,8 +253,10 @@ def loop_jogo():
         DisplayDoJogo.blit(Imagem_Fundo,(x,y))
     
 
+    
+    pygame.mixer.Sound.play(car_start)    
     pygame.mixer.music.play()
-        
+    
     velocidade_fundo = 10
     posição_inicial_fundo_y = -600
     posição_inicial_fundo_x = 0
