@@ -1,4 +1,3 @@
-
 # -*- coding: utf-8 -*-
 """
 Created on Mon May 11 20:01:53 2015
@@ -20,6 +19,7 @@ if __name__ == '__main__':
 
     # Lê o dado da base de dados
     result = fb.get('/', "Scores")
+
 
 
 produto = result
@@ -63,13 +63,14 @@ heloisa = pygame.image.load('helo2.png')
 vinicius = pygame.image.load('vinicius1.png')
 bala = pygame.image.load("bala.png")
 cubo = pygame.image.load("ItemBox.png")
-#mini = pygame.image.load('mini.png')
-#mini2 = pygame.image.load('mini2.png')
+Mini2 = pygame.image.load('mini.png')
+Mini = pygame.image.load('mini2.png')
+Ferrari2 = pygame.image.load('Ferrari.png')
+Ferrari = pygame.image.load('Ferrari2.png')
 fundo = pygame.image.load('Fundo1.png')
 
-car_start = pygame.mixer.Sound("car.wav")
 musica = pygame.mixer.music.load('uptown8bits.wav')
-faustao = pygame.mixer.Sound('18268__zippi1__sound-hahaha1.wav')
+faustao = pygame.mixer.Sound('faustao.wav')
 
 Imagem_Fundo = pygame.image.load('8bitsRoad.png')
 Imagem_Fundo = pygame.transform.scale(Imagem_Fundo,(largura_da_tela,1200))
@@ -100,11 +101,10 @@ def text_objects(text,cor,size):
 
 
 
-def mensagem (msg,cor,size):
+def mensagem (msg,cor,y_displace=0,size='small'):
     textSurf, textRect = text_objects(msg,cor,size)    
-    textRect.center = (largura_da_tela/2),(altura_da_tela/2)
+    textRect.center = (largura_da_tela/2),(altura_da_tela/2) + y_displace
     DisplayDoJogo.blit(textSurf,textRect)
-    pygame.display.update()
 
     
 def botao(x,y,w,h,ic,ac,acao=None):
@@ -120,11 +120,15 @@ def botao(x,y,w,h,ic,ac,acao=None):
                 quit()
             if acao == 'ranking':
                 ordena_ranking(produto)
-<<<<<<< HEAD
-                
-
-=======
->>>>>>> origin/master
+            if acao == 'sim':
+                loop_jogo()
+            if acao == 'nao':
+                pygame.quit()
+                quit()
+            if acao == 'mini':
+                loop_jogo()
+            if acao == 'ferrari':
+                loop_jogo()
     else:
         pygame.draw.rect(DisplayDoJogo, ic,(x,y,w,h))
         
@@ -161,24 +165,98 @@ def intro():
         gameDisplay.blit(text,(363,530))
         
         pygame.display.update()
+        
+def restart():
 
+    restart = True
 
+    while restart:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+
+        DisplayDoJogo.blit(fundointro, (0,0))
+        mensagem('Deseja jogar novamente?',red,80,'medium')
+
+        botao(345,440,100,40,black,green,acao='sim')
+        botao(345,515,100,40,black,red,acao='nao')
+
+        font = pygame.font.SysFont(None, 40)
+        text = font.render('SIM',True,white)
+        gameDisplay.blit(text,(370,450))
+
+        font = pygame.font.SysFont(None, 40)
+        text = font.render('NÃO',True,white)
+        gameDisplay.blit(text,(365,525))
+
+        pygame.mixer.Sound.stop(faustao)
+
+        pygame.display.update()
+
+        
 def bater(Jogador):
 
     print(Jogador.Score)
     pygame.mixer.music.stop()
     pygame.mixer.Sound.play(faustao)
-    mensagem('ERROOOOU!!!',red,'large')
-    Ranking(Jogador.Score)
-<<<<<<< HEAD
+    mensagem('ERROOOOU!!!',red,0,'large')
+    pygame.display.update()
+    #Ranking(Jogador.Score)
     #print(produto)
-=======
->>>>>>> origin/master
-    #ordena_ranking(produto)
     time.sleep(2)
     #loop_jogo() 
-    intro()   
-    
+    restart()
+
+class car_botao():
+
+    def __init__(self,img,img2,x,y,w,h,acao=None):
+        self.img = img
+        self.img2 = img2
+        self.x = x
+        self.y = y
+        self.w = w
+        self.h = h
+        self.acao = acao
+
+    def show_car(self):
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()
+        if self.x + self.w > mouse[0] > self.x and self.y + self.h > mouse[1] > self.y:
+            gameDisplay.blit(self.img2,(self.x,self.y))
+            if click[0] == 1:
+                if self.x == 33 and self.y == 185:
+                    self.acao = 'mini'
+                    loop_jogo()
+                if self.x == 417 and self.y == 185:
+                    self.acao = 'ferrari'
+                    loop_jogo()
+        else:
+            gameDisplay.blit(self.img,(self.x,self.y))
+                           
+def car_select():
+
+     sel = True
+
+     while sel:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+
+                quit()
+
+        gameDisplay.fill(white)
+
+        Mini_object.show_car()
+        Ferrari_object.show_car()
+
+        mensagem('Escolha o seu veículo',red,-220,'medium')
+        pygame.display.update()
+
+Mini_object = car_botao(Mini,Mini2,417,185,350,220)
+Ferrari_object = car_botao(Ferrari,Ferrari2,33,185,350,220)
+
+  
 def Ranking(Score):
     ranking = {}
     ranking[nome] = Score   
@@ -204,14 +282,13 @@ def ordena_ranking(produto):
             return 0
         for i,j in cada.items():
             print(i, " : ", j)
-
-       
+  
 
 def fundo(x,y):
     DisplayDoJogo.blit(Imagem_Fundo,(x,y))
      
 def imagem_carro(a,b):
-    DisplayDoJogo.blit(imgcarro,(a,b))
+    DisplayDoJogo.blit(imgcarro,(a,b))    
     
 def lourenco1(r,s):
     DisplayDoJogo.blit(lourenco,(r,s))
@@ -248,9 +325,7 @@ def loop_jogo():
     def fundo(x,y):
         DisplayDoJogo.blit(Imagem_Fundo,(x,y))
     
-
-    
-    pygame.mixer.Sound.play(car_start)    
+ 
     pygame.mixer.music.play()
     
     velocidade_fundo = 10
@@ -502,5 +577,7 @@ def loop_jogo():
 
 intro()
 loop_jogo()
+restart()
+car_select()
 pygame.quit()
 quit()
