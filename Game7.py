@@ -67,6 +67,7 @@ cubo = pygame.image.load("ItemBox.png")
 #mini2 = pygame.image.load('mini2.png')
 fundo = pygame.image.load('Fundo1.png')
 
+car_start = pygame.mixer.Sound("car.wav")
 musica = pygame.mixer.music.load('uptown8bits.wav')
 faustao = pygame.mixer.Sound('18268__zippi1__sound-hahaha1.wav')
 
@@ -238,8 +239,10 @@ def loop_jogo():
         DisplayDoJogo.blit(Imagem_Fundo,(x,y))
     
 
+    
+    pygame.mixer.Sound.play(car_start)    
     pygame.mixer.music.play()
-        
+    
     velocidade_fundo = 10
     posição_inicial_fundo_y = -600
     posição_inicial_fundo_x = 0
