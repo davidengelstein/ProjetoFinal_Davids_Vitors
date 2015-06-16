@@ -1,3 +1,4 @@
+
 # -*- coding: utf-8 -*-
 """
 Created on Mon May 11 20:01:53 2015
@@ -8,9 +9,9 @@ import pygame
 import random
 import time
 from random import choice
-from firebase import firebase
+#from firebase import firebase
 
-
+'''
 FIREBASE_URL = "https://car-game.firebaseio.com/"
 
 if __name__ == '__main__':
@@ -26,6 +27,7 @@ escolha_Carro = 1 # 1  for Ferrari 2 for Mini
 produto = result
 
 nome = input("Digite seu nome:")
+'''
 
 pygame.init()
 pygame.display.set_caption('Teachers Game Race') #Nome do jogo a ser decidido
@@ -39,6 +41,7 @@ green = (0,255,0)
 red = (255,0,0)
 blackb = (200,200,200)
 yellow = (255,242,0)
+grey = (69,69,69)
 
 
 
@@ -58,6 +61,8 @@ fps = 1000
 
 img_mini = pygame.image.load('car8bits2.png')
 img_ferrari = pygame.image.load('ferraricar.png')
+img_delorean = pygame.image.load('delorean.png')
+img_speed = pygame.image.load('speedracer.png')
 imgcarro = img_mini
 lourenco = pygame.image.load('lor.png')
 miranda = pygame.image.load('mir.png')
@@ -73,9 +78,39 @@ Mini = pygame.image.load('mini2.png')
 Ferrari2 = pygame.image.load('Ferrari.png')
 Ferrari = pygame.image.load('Ferrari2.png')
 fundo = pygame.image.load('Fundo1.png')
+space = pygame.image.load('space.png')
+arrow = pygame.image.load('arrow.png')
+Delorean = pygame.image.load('deloreann.png')
+Delorean2 = pygame.image.load('deloreannpb.png')
+Speed = pygame.image.load('speedracerr.png')
+Speed2 = pygame.image.load('speedracerrpb.png')
+helopeq = pygame.image.load('helopeq.png')
+orfpeq = pygame.image.load('orfpeq.png')
+fredpeq = pygame.image.load('fredpeq.png')
+mirpeq = pygame.image.load('mirpeq.png')
+lorpeq = pygame.image.load('lorpeq.png')
+bruno = pygame.image.load('bruno.png')
+bruno2 = pygame.image.load('bruno2.png')
+calvin = pygame.image.load('calvin.png')
+calvin2 = pygame.image.load('calvin2.png')
+brinquedo = pygame.image.load('brinquedo.png')
+brinquedo2 = pygame.image.load('brinquedo2.png')
+garrix = pygame.image.load('garrix.png')
+garrix2 = pygame.image.load('garrix2.png')
+katy = pygame.image.load('katy.png')
+katy2 = pygame.image.load('katy2.png')
+acdc = pygame.image.load('acdc.png')
+acdc2 = pygame.image.load('acdc2.png')
 
-musica = pygame.mixer.music.load('uptown8bits.wav')
+
+virus = pygame.mixer.Sound('virus.wav')
+firework = pygame.mixer.Sound('katy.wav')
+thunder = pygame.mixer.Sound('thunderstruck.wav')
+uptown = pygame.mixer.Sound('uptown8bits.wav')
+bottle = pygame.mixer.Sound('DrinkingFromTheBottle.wav')
 faustao = pygame.mixer.Sound('faustao.wav')
+som = bruno
+
 
 Imagem_Fundo = pygame.image.load('8bitsRoad.png')
 Imagem_Fundo = pygame.transform.scale(Imagem_Fundo,(largura_da_tela,1200))
@@ -104,36 +139,54 @@ def text_objects(text,cor,size):
         textSurface = largefont.render(text,True,cor)
     return textSurface,textSurface.get_rect()
 
-
-
-def mensagem (msg,cor,y_displace=0,size='small'):
+def mensagem (msg,cor,y_displace=0,x_displace = 0,size='small'):
     textSurf, textRect = text_objects(msg,cor,size)    
-    textRect.center = (largura_da_tela/2),(altura_da_tela/2) + y_displace
+    textRect.center = (largura_da_tela/2) + x_displace,(altura_da_tela/2) + y_displace
     DisplayDoJogo.blit(textSurf,textRect)
-
     
 def botao(x,y,w,h,ic,ac,acao=None):
     mouse = pygame.mouse.get_pos()
     click = pygame.mouse.get_pressed()
     if x + w > mouse[0] > x and y + h > mouse[1] > y:
         pygame.draw.rect(DisplayDoJogo, ac, (x,y,w,h))
-        if click[0] == 1 and acao != None:
+        if click[0] == 1:
             if acao == 'play':
-                car_select()
+                rostos()
             if acao == 'quit':
                 pygame.quit()
                 quit()
             if acao == 'ranking':
                 ordena_ranking(produto)
             if acao == 'sim':
-                car_select()
+                music_select()
             if acao == 'nao':
-                pygame.quit()
-                quit()
+                intro()
             if acao == 'mini':
                 loop_jogo()
             if acao == 'ferrari':
                 loop_jogo()
+            if acao == 'delorean':
+                loop_jogo()
+            if acao == 'speed':
+                loop_jogo()
+            if acao == 'controles':
+                controle()
+            if acao == 'back':
+                intro()
+            if acao == 'playy':
+                music_select()
+            if acao == 'calvin':
+                car_select()
+            if acao == 'bruno':
+                car_select()
+            #if acao == 'brinquedo':
+            if acao == 'garrix':
+                car_select()
+            if acao == 'katy':
+                car_select()
+            if acao == 'acdc':
+                car_select()
+            
     else:
         pygame.draw.rect(DisplayDoJogo, ic,(x,y,w,h))
         
@@ -153,21 +206,27 @@ def intro():
         #pygame.draw.rect(DisplayDoJogo,white,[0,230,100,200])
 
                 
-        botao(310,400,180,40,black,green,acao = 'play')
-        botao(310,460,180,40,black,red,acao = 'ranking')
-        botao(310,520,180,40,black,yellow,acao = 'quit')
+        botao(310,370,190,40,black,green,acao = 'play')
+        botao(310,430,190,40,black,red,acao = 'ranking')
+        botao(310,490,190,40,black,blue,acao = 'controles')
+        botao(310,550,190,40,black,yellow,acao = 'quit')
+        
 
         font = pygame.font.SysFont(None, 40)
         text = font.render('PLAY',True,white)
-        gameDisplay.blit(text,(363,410))
+        gameDisplay.blit(text,(366,380))
         
         font = pygame.font.SysFont(None, 40)
         text = font.render('RANKING',True,white)
-        gameDisplay.blit(text,(333,470))
+        gameDisplay.blit(text,(336,440))
+
+        font = pygame.font.SysFont(None, 40)
+        text = font.render('CONTROLS',True,white)
+        gameDisplay.blit(text,(325,500))
         
         font = pygame.font.SysFont(None, 40)
         text = font.render('QUIT',True,white)
-        gameDisplay.blit(text,(363,530))
+        gameDisplay.blit(text,(369,560))
         
         pygame.display.update()
         
@@ -182,30 +241,92 @@ def restart():
                 quit()
 
         DisplayDoJogo.blit(fundointro, (0,0))
-        mensagem('Deseja jogar novamente?',red,80,'medium')
+        mensagem('Play again?',red,80,0,'medium')
 
-        botao(345,440,100,40,black,green,acao='sim')
-        botao(345,515,100,40,black,red,acao='nao')
+        botao(355,440,80,40,black,green,acao='sim')
+        botao(355,515,80,40,black,red,acao='nao')
 
         font = pygame.font.SysFont(None, 40)
-        text = font.render('SIM',True,white)
+        text = font.render('YES',True,white)
         gameDisplay.blit(text,(370,450))
 
         font = pygame.font.SysFont(None, 40)
-        text = font.render('NÃO',True,white)
-        gameDisplay.blit(text,(365,525))
+        text = font.render('NO',True,white)
+        gameDisplay.blit(text,(375,525))
 
         pygame.mixer.Sound.stop(faustao)
 
         pygame.display.update()
 
+def controle():
+
+    controle = True
+
+    while controle:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+
+        DisplayDoJogo.fill(white)
+        
+        mensagem('Controls',red,-250,0,'medium')
+        mensagem('Press the space button to shoot',blue,-60,0,'small')
+        mensagem('Use the directionals to control the car',blue,190,0,'small')
+
+        botao(690,550,100,40,black,yellow,acao='back')
+
+        font = pygame.font.SysFont(None, 40)
+        text = font.render('BACK',True,white)
+        gameDisplay.blit(text,(700,560))
+
+        gameDisplay.blit(space,(225,150))
+        gameDisplay.blit(arrow,(280,300))
+        
+        pygame.display.update()    
+
+def rostos():
+
+    rostos = True
+
+    while rostos:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+
+        DisplayDoJogo.fill(grey)
+
+        mensagem('Take these faces to get points',green,-150,90,'small')
+        mensagem('Take this block to get ammo',yellow,220,90,'small')
+        mensagem('Bypass these faces',red,60,90,'small')
+
+        botao(690,550,100,40,black,green,acao='playy')
+
+        font = pygame.font.SysFont(None, 40)
+        text = font.render('PLAY',True,white)
+        gameDisplay.blit(text,(705,560))
+
+        gameDisplay.blit(haddad,(80,40))
+        gameDisplay.blit(vinicius,(100,160))
+        gameDisplay.blit(cubo,(100,490))
+        gameDisplay.blit(helopeq,(80,300))
+        gameDisplay.blit(mirpeq,(80,380))
+        gameDisplay.blit(lorpeq,(150,300))
+        gameDisplay.blit(fredpeq,(150,380))
+        gameDisplay.blit(orfpeq,(210,340))
+        
+        
+
+        pygame.display.update()
         
 def bater(Jogador):
 
     print(Jogador.Score)
-    pygame.mixer.music.stop()
+    pygame.mixer.Sound.stop(som)
+    pygame.mixer.Sound.set_volume(faustao,1.0)
     pygame.mixer.Sound.play(faustao)
-    mensagem('ERROOOOU!!!',red,0,'large')
+    mensagem('ERROOOOU!!!',red,0,0,'large')
     pygame.display.update()
     #Ranking(Jogador.Score)
     #print(produto)
@@ -230,13 +351,19 @@ class car_botao():
         if self.x + self.w > mouse[0] > self.x and self.y + self.h > mouse[1] > self.y:
             gameDisplay.blit(self.img2,(self.x,self.y))
             if click[0] == 1:
-                if self.x == 33 and self.y == 185:
+                if self.x == 58 and self.y == 140:
+                    car_botao.carro = 'ferrari'
+                    loop_jogo()            
+                if self.x == 442 and self.y == 140:
                     car_botao.carro = 'mini'
                     loop_jogo()
-                    
-                if self.x == 417 and self.y == 185:
-                    car_botao.carro = 'ferrari'
+                if self.x == 58 and self.y == 360:
+                    car_botao.carro = 'delorean'
                     loop_jogo()
+                if self.x == 442 and self.y == 360:
+                    car_botao.carro = 'speed'
+                    loop_jogo()
+                
         else:
             gameDisplay.blit(self.img,(self.x,self.y))
                            
@@ -248,21 +375,97 @@ def car_select():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
-
                 quit()
 
-        gameDisplay.fill(white)
+        gameDisplay.fill(grey)
 
         Mini_object.show_car()
         Ferrari_object.show_car()
+        Delorean_object.show_car()
+        Speed_object.show_car()
 
-        mensagem('Escolha o seu veículo',red,-220,'medium')
+        mensagem('Choose your car',red,-250,0,'medium')
         pygame.display.update()
 
-Mini_object = car_botao(Mini,Mini2,417,185,350,220)
-Ferrari_object = car_botao(Ferrari,Ferrari2,33,185,350,220)
+Mini_object = car_botao(Mini,Mini2,442,140,300,188)
+Ferrari_object = car_botao(Ferrari,Ferrari2,58,140,300,188)
+Delorean_object = car_botao(Delorean2,Delorean,58,360,300,188)
+Speed_object = car_botao(Speed2,Speed,442,360,300,188)
 
-  
+class music_botao():
+    musica = 'uptown'
+
+    def __init__(self,img,img2,x,y,w,h,acao=None):
+        self.img = img
+        self.img2 = img2
+        self.x = x
+        self.y = y
+        self.w = w
+        self.h = h
+        self.acao = acao
+
+    def show_music(self):
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()
+        if self.x + self.w > mouse[0] > self.x and self.y + self.h > mouse[1] > self.y:
+            gameDisplay.blit(self.img2,(self.x,self.y))
+            if click[0] == 1:
+                if self.x == 65 and self.y == 80:
+                    music_botao.musica = 'bruno'
+                    car_select()
+                if self.x == 555 and self.y == 80:
+                    music_botao.musica = 'calvin'
+                    car_select()
+                #if self.x == 310 and self.y == 80:
+                    #music_botao.musica = 'brinquedo'
+                    #pass
+                if self.x == 65 and self.y == 340:
+                    music_botao.musica = 'garrix'
+                    car_select()
+                if self.x == 310 and self.y == 340:
+                    music_botao.musica = 'katy'
+                    car_select()
+                if self.x == 555 and self.y == 340:
+                    music_botao.musica = 'acdc'
+                    car_select()
+                
+                
+        else:
+            gameDisplay.blit(self.img,(self.x,self.y))
+
+def music_select():
+
+    mus = True
+
+    while mus:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+
+        gameDisplay.fill(grey)
+
+        calvin_object.show_music()
+        bruno_object.show_music()
+        brinquedo_object.show_music()
+        garrix_object.show_music()
+        katy_object.show_music()
+        acdc_object.show_music()
+
+        mensagem('Choose the artist',red,-270,0,'medium')
+        pygame.display.update()
+
+calvin_object = music_botao(calvin2,calvin,555,80,180,244)
+bruno_object = music_botao(bruno2,bruno,65,80,180,244)
+brinquedo_object = music_botao(brinquedo2,brinquedo,310,80,180,244)
+garrix_object = music_botao(garrix2,garrix,65,340,180,244)
+katy_object = music_botao(katy2,katy,310,340,180,244)
+acdc_object = music_botao(acdc2,acdc,555,340,180,244)
+
+
+        
+        
+'''
 def Ranking(Score):
     ranking = {}
     ranking[nome] = Score   
@@ -288,7 +491,7 @@ def ordena_ranking(produto):
             return 0
         for i,j in cada.items():
             print(i, " : ", j)
-  
+'''  
 
 def fundo(x,y):
     DisplayDoJogo.blit(Imagem_Fundo,(x,y))
@@ -326,23 +529,42 @@ Não_Rodar_Jogo = False
 
 
 def loop_jogo():
-    Imagem_Fundo = pygame.image.load('8bitsRoad.png')   
-    Imagem_Fundo = pygame.transform.scale(Imagem_Fundo,(largura_da_tela,1200))
+    #Imagem_Fundo = pygame.image.load('8bitsRoad.png')   
+    #Imagem_Fundo = pygame.transform.scale(Imagem_Fundo,(largura_da_tela,1200))
     
     def fundo(x,y):
         DisplayDoJogo.blit(Imagem_Fundo,(x,y))
 
-
     global imgcarro
+    global som
     
     if car_botao.carro == 'ferrari':
-        imgcarro = img_mini
-    else:
         imgcarro = img_ferrari
- 
-    pygame.mixer.music.play()
+    elif car_botao.carro == 'mini':
+        imgcarro = img_mini
+    elif car_botao.carro == 'delorean':
+        imgcarro = img_delorean
+    elif car_botao.carro == 'speed':
+        imgcarro = img_speed
+
+    if music_botao.musica == 'bruno':
+        som = uptown
+    elif music_botao.musica == 'calvin':
+        som = bottle
+    #elif music_botao.musica == 'brinquedo':
+        #pass
+    elif music_botao.musica == 'garrix':
+        som = virus
+    elif music_botao.musica == 'katy':
+        som = firework
+    elif music_botao.musica == 'acdc':
+        som = thunder
+
     
-    velocidade_fundo = 10
+ 
+    pygame.mixer.Sound.play(som)
+    
+    velocidade_fundo = 5
     posição_inicial_fundo_y = -600
     posição_inicial_fundo_x = 0
     atualiza_5 = False
@@ -504,7 +726,6 @@ def loop_jogo():
                         contador -= 1
 
         fundo(posição_inicial_fundo_x,posição_inicial_fundo_y)
-        imagem_carro(car_positionX,car_positionY)
         cubos_contador(contador)       
         func_cubos(cubosx, cubosy)
 
@@ -523,6 +744,8 @@ def loop_jogo():
         had.posper2(10000,20000)
         vin.posper2(10000,20000)
         hel.posper2(1000,5000)
+
+        imagem_carro(car_positionX,car_positionY)
 
         lor.crash()
         mir.crash()
@@ -588,10 +811,12 @@ def loop_jogo():
         pygame.display.update()
         framespersecond.tick(fps)
 
-
-intro()
-loop_jogo()
-restart()
+intro() 
+controle()
+rostos()
+music_select()
 car_select()
+restart()        
+loop_jogo()
 pygame.quit()
 quit()
