@@ -140,11 +140,6 @@ def mensagem (msg,cor,y_displace=0,x_displace = 0,size='small'):
     textSurf, textRect = text_objects(msg,cor,size)    
     textRect.center = (largura_da_tela/2) + x_displace,(altura_da_tela/2) + y_displace
     DisplayDoJogo.blit(textSurf,textRect)
-
-def mensagem2 (msg,cor,x_displace=0,y_displace=0,size='small'):
-    textSurf, textRect = text_objects(msg,cor,size)    
-    textRect.center = (largura_da_tela/2) + x_displace,(altura_da_tela/2) + y_displace
-    DisplayDoJogo.blit(textSurf,textRect)
     
 def botao(x,y,w,h,ic,ac,acao=None):
     mouse = pygame.mouse.get_pos()
@@ -244,6 +239,7 @@ def restart():
 
         DisplayDoJogo.blit(fundointro, (0,0))
         mensagem('Play again?',red,80,0,'medium')
+        #mensagem(Jogador.Score,green,0,0,'medium')
 
         botao(355,440,80,40,black,green,acao='sim')
         botao(355,515,80,40,black,red,acao='nao')
@@ -269,14 +265,19 @@ def rank():
                 pygame.quit()
                 quit()
          gameDisplay.blit(deserto,(0,0))
-         mensagem("RANKING",black,-265,'medium')
-         mensagem2("RANKING",red,3,-268,'medium')
-
+         mensagem("RANKING",black,-265,0,'medium')
+         mensagem("RANKING",red,-268,3,'medium')
+         
+         botao(690,550,100,40,black,yellow,acao='back')
+         font = pygame.font.SysFont(None, 40)
+         text = font.render('BACK',True,white)
+         gameDisplay.blit(text,(700,560))         
+         
          texto = ordena_ranking(produto).split("\n")
          ct = 0
          for linha in texto:
-             mensagem(linha,black,-220 + ct*50,'small')
-             mensagem2(linha,yellow,3,-223 + ct*50,'small')
+             mensagem(linha,black,-220 + ct*50,0,'small')
+             mensagem(linha,yellow,-223 + ct*50,3,'small')
              
              ct +=1
          pygame.display.update()
@@ -592,10 +593,9 @@ def loop_jogo():
  
     pygame.mixer.Sound.play(som)
     
-    velocidade_fundo = 5
+    velocidade_fundo = 10
     posição_inicial_fundo_y = -600
     posição_inicial_fundo_x = 0
-    atualiza_5 = False
 
     prof_largura = 60
     prof_altura = 60
@@ -610,9 +610,7 @@ def loop_jogo():
     cubos_speed = velocidade_fundo
     cubos_compr=60
     cubos_larg=66
-    
-    tirosx = car_positionX
-    tirosy = car_positionY
+
 
 
     contador = 0
@@ -646,26 +644,20 @@ def loop_jogo():
                 Jogador.Score += 1
             
         def crash(self):
-            if car_positionY < self.titulo2 + prof_altura and car_positionY + carY >= self.titulo2 + 60: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
+            if car_positionY < self.titulo2 + prof_altura and car_positionY + carY >= self.titulo2 + 50: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
                 if car_positionX > self.titulo1 and car_positionX < self.titulo1 + prof_largura or car_positionX + carX > self.titulo1 and car_positionX + carX < self.titulo1 + prof_largura:
                     bater(Jogador)
                     
                        
 
         def crash2 (self,value):
-            if car_positionY < self.titulo2 + prof_altura and car_positionY + carY >= self.titulo2 + 60: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
+            if car_positionY < self.titulo2 + prof_altura and car_positionY + carY >= self.titulo2 + 20: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
                 if car_positionX > self.titulo1 and car_positionX < self.titulo1 + prof_largura or car_positionX + carX > self.titulo1 and car_positionX + carX < self.titulo1 + prof_largura:
                     
                     Jogador.Score += value
                     self.titulo2 = -1500
                     self.titulo1 = random.choice([210,375,540])
         
-        def posicoes_repetidas_lor(self,random1,random2):
-            while True:
-                if car_positionY < self.titulo2 + prof_altura and car_positionY + carY >= self.titulo2 + 60: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
-                    if car_positionX > self.titulo1 and car_positionX < self.titulo1 + prof_largura or car_positionX + carX > self.titulo1 and car_positionX + carX < self.titulo1 + prof_largura:
-                                    self.titulo1 = random.choice([210,375,540])
-                                    self.titulo2 = random.randrange(random1,random2)
                 
 
     class tiros:
@@ -700,6 +692,7 @@ def loop_jogo():
                         p.titulo2 = -1500
                         p.titulo1 = random.choice([210,375,540])
                         lista_tiros.remove(self)
+                        Jogador.Score += 3
                         
                 
 
