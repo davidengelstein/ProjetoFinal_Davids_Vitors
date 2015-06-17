@@ -82,6 +82,8 @@ Imagem_Fundo = pygame.transform.scale(Imagem_Fundo,(largura_da_tela,1200))
 
 fundointro = pygame.transform.scale(fundo,(largura_da_tela,altura_da_tela))
 
+
+
 def cubos_contador(cont):
     font = pygame.font.SysFont(None, 40)
     text = font.render("tiros: "+str(cont), True, black)
@@ -111,6 +113,10 @@ def mensagem (msg,cor,y_displace=0,size='small'):
     textRect.center = (largura_da_tela/2),(altura_da_tela/2) + y_displace
     DisplayDoJogo.blit(textSurf,textRect)
 
+def mensagem2 (msg,cor,x_displace=0,y_displace=0,size='small'):
+    textSurf, textRect = text_objects(msg,cor,size)    
+    textRect.center = (largura_da_tela/2) + x_displace,(altura_da_tela/2) + y_displace
+    DisplayDoJogo.blit(textSurf,textRect)
     
 def botao(x,y,w,h,ic,ac,acao=None):
     mouse = pygame.mouse.get_pos()
@@ -124,12 +130,11 @@ def botao(x,y,w,h,ic,ac,acao=None):
                 pygame.quit()
                 quit()
             if acao == 'ranking':
-                ordena_ranking(produto)
+                rank()          
             if acao == 'sim':
                 car_select()
             if acao == 'nao':
-                pygame.quit()
-                quit()
+                intro()
             if acao == 'mini':
                 loop_jogo()
             if acao == 'ferrari':
@@ -199,15 +204,36 @@ def restart():
 
         pygame.display.update()
 
-        
+deserto = pygame.image.load('deserto.png')
+
+def rank():
+     rank = True
+     while rank:
+         for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+         gameDisplay.blit(deserto,(0,0))
+         mensagem("RANKING",black,-265,'medium')
+         mensagem2("RANKING",red,3,-268,'medium')
+
+         texto = ordena_ranking(produto).split("\n")
+         ct = 0
+         for linha in texto:
+             mensagem(linha,black,-220 + ct*50,'small')
+             mensagem2(linha,yellow,3,-223 + ct*50,'small')
+             
+             ct +=1
+         pygame.display.update()
+         
 def bater(Jogador):
 
-    print(Jogador.Score)
+    #print(Jogador.Score)
     pygame.mixer.music.stop()
     pygame.mixer.Sound.play(faustao)
     mensagem('ERROOOOU!!!',red,0,'large')
     pygame.display.update()
-    #Ranking(Jogador.Score)
+    Ranking(Jogador.Score)
     #print(produto)
     time.sleep(2)
     #loop_jogo() 
@@ -262,7 +288,6 @@ def car_select():
 Mini_object = car_botao(Mini,Mini2,417,185,350,220)
 Ferrari_object = car_botao(Ferrari,Ferrari2,33,185,350,220)
 
-  
 def Ranking(Score):
     ranking = {}
     ranking[nome] = Score   
@@ -276,20 +301,26 @@ def Ranking(Score):
         fb.put('/', "Scores", produto)
 
 
-def ordena_ranking(produto):     
-    def ordena(dici):
-        if dici == None:
-            return 0
-        for k in dici:
-            return dici[k]   
-    ordem = list(reversed(sorted(produto, key=ordena)))    
+def ordena(dici):
+    if dici == None:
+        return 0
+    for k in dici:
+        return dici[k]   
+
+def ordena_ranking(produto):  
+    ranking = ""
+    ordem = list(reversed(sorted(produto, key=ordena)))[:10]    
     for cada in ordem:
         if cada == None:
-            return 0
+            continue
         for i,j in cada.items():
-            print(i, " : ", j)
-  
-
+            #print(i, " : ", j)
+            ranking = ranking +  (str(i) + " : " + str(j) + "\n")
+    print(ranking)
+    return ranking
+#gameDisplay.fill(black)
+    
+    
 def fundo(x,y):
     DisplayDoJogo.blit(Imagem_Fundo,(x,y))
      
@@ -409,6 +440,14 @@ def loop_jogo():
                     Jogador.Score += value
                     self.titulo2 = -1500
                     self.titulo1 = random.choice([210,375,540])
+        
+        def posicoes_repetidas_lor(self,random1,random2):
+            while True:
+                if car_positionY < self.titulo2 + prof_altura and car_positionY + carY >= self.titulo2 + 60: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
+                    if car_positionX > self.titulo1 and car_positionX < self.titulo1 + prof_largura or car_positionX + carX > self.titulo1 and car_positionX + carX < self.titulo1 + prof_largura:
+                                    self.titulo1 = random.choice([210,375,540])
+                                    self.titulo2 = random.randrange(random1,random2)
+                
 
     class tiros:
         altura = 40
