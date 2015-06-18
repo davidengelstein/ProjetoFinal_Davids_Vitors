@@ -111,6 +111,7 @@ Imagem_Fundo = pygame.image.load('8bitsRoad.png')
 Imagem_Fundo = pygame.transform.scale(Imagem_Fundo,(largura_da_tela,1200))
 
 fundointro = pygame.transform.scale(fundo,(largura_da_tela,altura_da_tela))
+scorefinal = pygame.transform.scale(deserto,(largura_da_tela,altura_da_tela))
 
 
 
@@ -183,6 +184,8 @@ def botao(x,y,w,h,ic,ac,acao=None):
                 car_select()
             if acao == 'acdc':
                 car_select()
+            if acao == 'forward':
+                restart()
             
     else:
         pygame.draw.rect(DisplayDoJogo, ic,(x,y,w,h))
@@ -343,20 +346,48 @@ def rostos():
         
 
         pygame.display.update()
-        
-def bater(Jogador):
 
-    print(Jogador.Score)
-    pygame.mixer.Sound.stop(som)
-    pygame.mixer.Sound.set_volume(faustao,1.0)
-    pygame.mixer.Sound.play(faustao)
-    mensagem('ERROOOOU!!!',red,0,0,'large')
-    pygame.display.update()
-    Ranking(Jogador.Score)
+#def Score_Final():
+    #Score_Final = True
+
+    #while Score_Final:
+        #for event in pygame.event.get():
+            #if event.type == pygame.QUIT:
+                #pygame.quit()
+                #quit()
+
+        #DisplayDoJogo.blit(scorefinal,(0,0))
+        
+        #botao(690,550,100,40,black,green,acao='forward')
+        #font = pygame.font.SysFont(None, 40)
+        #text = font.render('PLAY',True,white)
+        #gameDisplay.blit(text,(705,560))
+
+        #font = pygame.font.SysFont(None, 40)
+        #text = font.render(Jogador.Score,True,black)
+        #gameDisplay.blit(text,(200,200))        
+        
+        #pygame.display.update()
+    
+
+    #font = pygame.font.SysFont(None, 40)
+    #text = font.render("Pinto",True,green)
+    #DisplayDoJogo.blit(text,(200,200))
+        
+#def bater(Jogador):
+
+    #print(Jogador.Score)
+    #pygame.mixer.Sound.stop(som)
+    #pygame.mixer.Sound.set_volume(faustao,1.0)
+    #pygame.mixer.Sound.play(faustao)
+    #mensagem('ERROOOOU!!!',red,0,0,'large')
+    #pygame.display.update()
+    #Ranking(Jogador.Score)
     #print(produto)
-    time.sleep(2)
-    #loop_jogo() 
-    restart()
+    #time.sleep(2)
+    #loop_jogo()
+    #Score_Final() 
+    #restart()
     
 class car_botao():
     carro = 'mini'
@@ -549,6 +580,8 @@ def vinicius1(r,s):
 def heloisa1(r,s):
     DisplayDoJogo.blit(heloisa,(r,s))
 
+
+
             
 DisplayDoJogo = pygame.display.set_mode((largura_da_tela,altura_da_tela))
     
@@ -693,6 +726,53 @@ def loop_jogo():
                         p.titulo1 = random.choice([210,375,540])
                         lista_tiros.remove(self)
                         Jogador.Score += 3
+
+    def Score_Final():
+        Score_Final = True
+
+        while Score_Final:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    quit()
+
+            pygame.mixer.Sound.stop(faustao)
+            DisplayDoJogo.blit(scorefinal,(0,0))
+            
+            botao(690,550,100,40,black,green,acao='forward')
+            font = pygame.font.SysFont(None, 40)
+            text = font.render('SKIP',True,white)
+            gameDisplay.blit(text,(705,560))
+
+            font = pygame.font.SysFont(None, 60)
+            text = font.render("Score: " + str(Jogador.Score),True,black)
+            gameDisplay.blit(text,(330,200))
+
+            #font = pygame.font.SysFont(None, 40)
+            #text = font.render(str(Jogador.Score),True,black)
+            #gameDisplay.blit(text,(387,250))        
+            
+            pygame.display.update()
+    
+
+    #font = pygame.font.SysFont(None, 40)
+    #text = font.render("Pinto",True,green)
+    #DisplayDoJogo.blit(text,(200,200))
+        
+    def bater(Jogador):
+
+        print(Jogador.Score)
+        pygame.mixer.Sound.stop(som)
+        pygame.mixer.Sound.set_volume(faustao,1.0)
+        pygame.mixer.Sound.play(faustao)
+        mensagem('ERROOOOU!!!',red,0,0,'large')
+        pygame.display.update()
+        Ranking(Jogador.Score)
+        #print(produto)
+        time.sleep(2)
+        #loop_jogo()
+        Score_Final() 
+        restart()
                         
                 
 
@@ -845,6 +925,7 @@ controle()
 rostos()
 music_select()
 car_select()
+Score_Final()
 restart()        
 loop_jogo()
 pygame.quit()
