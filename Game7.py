@@ -13,6 +13,8 @@ import tkinter as tk
 
 FIREBASE_URL = "https://car-game.firebaseio.com/"
 
+global result
+
 if __name__ == '__main__':
     # Cria uma referência para a aplicação Firebase
     fb = firebase.FirebaseApplication(FIREBASE_URL, None)
@@ -22,7 +24,7 @@ if __name__ == '__main__':
 
 
 
-nome = input("Insira o seu nome: ")
+#nome = input("Insira o seu nome: ")
 
 escolha_Carro = 1 # 1  for Ferrari 2 for Mini
 
@@ -244,7 +246,8 @@ def gamb():
 abc = ""
 
 def tkinter():
-    global abc
+    global nome
+
     pag_inicial = Tk()
     pag_inicial.geometry('250x250+500+300')
     pag_inicial.title('Nome')
@@ -257,8 +260,6 @@ def tkinter():
 
     shin_chapadao = Button(pag_inicial,text = "OK", command = gamb, fg = 'black', bg = 'white').pack()
 
-    abc = nome.get()
-    
     pag_inicial.mainloop()
 
     
@@ -555,8 +556,10 @@ acdc_object = music_botao(acdc2,acdc,555,340,180,244)
         
 
 def Ranking(Score):
+    global nometext
+    nometext = nome.get()
     ranking = {}
-    ranking[nome] = Score   
+    ranking[nometext] = Score   
     produto.append(ranking)
     # Troque esta URL pela de seu próprio App Firebase
     FIREBASE_URL = "https://car-game.firebaseio.com/"
