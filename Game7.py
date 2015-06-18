@@ -6,6 +6,10 @@ import random
 import time
 from random import choice
 from firebase import firebase
+from tkinter import *
+import sys
+import tkinter as tk
+
 
 FIREBASE_URL = "https://car-game.firebaseio.com/"
 
@@ -17,11 +21,12 @@ if __name__ == '__main__':
     result = fb.get('/', "Scores")
 
 
+
+nome = input("Insira o seu nome: ")
+
 escolha_Carro = 1 # 1  for Ferrari 2 for Mini
 
 produto = result
-
-nome = input("Digite seu nome:")
 
 pygame.init()
 pygame.display.set_caption('Teachers Game Race') #Nome do jogo a ser decidido
@@ -200,8 +205,10 @@ def intro():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
-                
-            
+
+
+        
+        
         DisplayDoJogo.blit(fundointro, (0,0))
         #pygame.draw.rect(DisplayDoJogo,white,[0,230,100,200])
 
@@ -229,7 +236,33 @@ def intro():
         gameDisplay.blit(text,(369,560))
         
         pygame.display.update()
-        
+
+def gamb():
+    intro()
+    #pag_inicial.root.destroy()
+
+abc = ""
+
+def tkinter():
+    global abc
+    pag_inicial = Tk()
+    pag_inicial.geometry('250x250+500+300')
+    pag_inicial.title('Nome')
+
+    nome = StringVar()
+
+    shin_doidao = Label(pag_inicial,text = "Insira o seu nome:").pack()
+
+    inserir_shin_doidao = Entry(pag_inicial,textvariable = nome).pack()
+
+    shin_chapadao = Button(pag_inicial,text = "OK", command = gamb, fg = 'black', bg = 'white').pack()
+
+    abc = nome.get()
+    
+    pag_inicial.mainloop()
+
+    
+
 def restart():
 
     restart = True
@@ -920,6 +953,8 @@ def loop_jogo():
         pygame.display.update()
         framespersecond.tick(fps)
 
+
+tkinter()
 intro() 
 controle()
 rostos()
