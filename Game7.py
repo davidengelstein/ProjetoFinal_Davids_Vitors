@@ -249,7 +249,7 @@ def tkinter():
     global nome
 
     pag_inicial = Tk()
-    pag_inicial.geometry('250x250+500+300')
+    pag_inicial.geometry('250x100+500+300')
     pag_inicial.title('Nome')
 
     nome = StringVar()
