@@ -457,6 +457,7 @@ class car_botao():
             gameDisplay.blit(self.img,(self.x,self.y))
                            
 def car_select():
+     time.sleep(0.3)
 
      sel = True
 
@@ -523,6 +524,7 @@ class music_botao():
             gameDisplay.blit(self.img,(self.x,self.y))
 
 def music_select():
+    time.sleep(0.3)
 
     mus = True
 
