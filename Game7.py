@@ -199,6 +199,7 @@ def botao(x,y,w,h,ic,ac,acao=None):
         
 
 def intro():
+    time.sleep(0.3)
 
     intro = True
 
@@ -696,15 +697,23 @@ def loop_jogo():
         Score = 0
     
     class personagens:
+        todos = []
         def __init__(self,titulo1,titulo2):
             self.titulo1 = titulo1
             self.titulo2 = titulo2
+            
+            personagens.todos.append(self)
             
             
         def posiniper(self,random1,random2):
             self.titulo1 = random.choice([210,375,540])
             self.titulo2 = random.randrange(random1,random2)
-
+            #for p in personagens.todos:
+                #if self != p:
+                    #if p.titulo2 < self.titulo2 + prof_altura and p.titulo2 + prof_altura >= self.titulo2: #Este e o próximo if realizam todas as possíveis opções de colisão com o bloco. São expressões matemáticas               
+                        #if p.titulo1 > self.titulo1 and p.titulo1 < self.titulo1 + prof_largura or p.titulo1 + prof_largura > self.titulo1 and p.titulo1 + prof_largura < self.titulo1 + prof_largura:
+                            #self.titulo2 += 1000
+                        # se houver, sortear a propria posicao de novo
 
         def posper2(self,random3,random4):
             if self.titulo2 > altura_da_tela:
@@ -807,7 +816,7 @@ def loop_jogo():
         pygame.display.update()
         Ranking(Jogador.Score)
         #print(produto)
-        time.sleep(2)
+        time.sleep(1)
         #loop_jogo()
         Score_Final() 
         restart()
