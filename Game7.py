@@ -111,6 +111,7 @@ thunder = pygame.mixer.Sound('thunderstruck.wav')
 uptown = pygame.mixer.Sound('uptown8bits.wav')
 bottle = pygame.mixer.Sound('DrinkingFromTheBottle.wav')
 faustao = pygame.mixer.Sound('faustao.wav')
+brinq = pygame.mixer.Sound('roca.wav')
 som = bruno
 
 
@@ -184,7 +185,8 @@ def botao(x,y,w,h,ic,ac,acao=None):
                 car_select()
             if acao == 'bruno':
                 car_select()
-            #if acao == 'brinquedo':
+            if acao == 'brinquedo':
+                car_select()
             if acao == 'garrix':
                 car_select()
             if acao == 'katy':
@@ -507,9 +509,9 @@ class music_botao():
                 if self.x == 555 and self.y == 80:
                     music_botao.musica = 'calvin'
                     car_select()
-                #if self.x == 310 and self.y == 80:
-                    #music_botao.musica = 'brinquedo'
-                    #pass
+                if self.x == 310 and self.y == 80:
+                    music_botao.musica = 'brinquedo'
+                    car_select()
                 if self.x == 65 and self.y == 340:
                     music_botao.musica = 'garrix'
                     car_select()
@@ -652,8 +654,8 @@ def loop_jogo():
         som = uptown
     elif music_botao.musica == 'calvin':
         som = bottle
-    #elif music_botao.musica == 'brinquedo':
-        #pass
+    elif music_botao.musica == 'brinquedo':
+        som = brinq
     elif music_botao.musica == 'garrix':
         som = virus
     elif music_botao.musica == 'katy':
